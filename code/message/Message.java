@@ -43,9 +43,9 @@ public abstract class Message() {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");
         this.timestamp = simpleDateFormat.format(new Date());
-
         this.serialNo = System.currentTimeMillis();
     }
+
 
     /**
      * Converts a time stamp string in format of "yyyyMMdd-HHmmss.SSS" to Date object

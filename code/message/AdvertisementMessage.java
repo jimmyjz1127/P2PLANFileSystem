@@ -31,6 +31,30 @@ public class AdvertisementMessage extends Message {
     }
 
     /**
+     * Setter function for searchPossible.
+     * @param searchPossible : boolean true or false
+     */
+    public void setSearchPossible(boolean searchPossible) {
+        this.searchPossible = searchPossible;
+    }
+
+    /**
+     * Setter function for downloadPossible.
+     * @param downloadPossible : boolean true or false
+     */
+    public void setDownloadPossible(boolean downloadPossible) {
+        this.downloadPossible = downloadPossible;
+    }
+
+    /**
+     * Setter function for searchType.
+     * @param searchType : string "none", "path", "path-filename", "path-filename-substring"
+     */
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    /**
      * Returns the a string indicating the type of message
      */
     public String getType() {

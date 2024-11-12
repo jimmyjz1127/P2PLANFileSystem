@@ -1,3 +1,5 @@
+package code.message;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -17,7 +19,7 @@ import java.text.ParseException;
  */
 public abstract class Message() {
     // Serial number for the message header
-    private static final long serialNo = System.currentTimeMillis();
+    private long serialNo;
 
     /**
      * Header Attributes
@@ -26,12 +28,6 @@ public abstract class Message() {
     private String hostname;                // Identifier Field 
     private String timestamp;               // Timestamp of header 
     private String identifier;              // The identifier of message (e.g FQDN)
-
-
-    /**
-     * Payload
-     */
-    // private String responseID;   // response identifier (same as identifier used in request) 
 
     /**
      * Constructor for Message Object.
@@ -47,6 +43,8 @@ public abstract class Message() {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");
         this.timestamp = simpleDateFormat.format(new Date());
+
+        this.serialNo = System.currentTimeMillis();
     }
 
     /**
@@ -58,6 +56,56 @@ public abstract class Message() {
         return simpleDateFormat.parse(timestamp);
     }
 
+    /**
+     * Setter function for serialNo.
+     */
+    public void setSerialNo(long serialNo) {
+        this.serialNo = serialNo;
+    }
+
+    /**
+     * Setter function for identifier.
+     */
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    /**
+     * Getter function the username.
+     * @return : the username in identifier field
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
+     * Getter function of hostname.
+     */
+    public String getHostname() {
+        return this.hostname;
+    }
+
+    /**
+     * Getter function for timestamp string.
+     */
+    public String getTimestamp() {
+        return this.timestamp;
+    }
+
+    /**
+     * Getter function for serial number
+     */
+    public String getSerialNo() {
+        return this.serialNo;
+    }
+
+    /**
+     * Getter function for identifier.
+     */
+    public String getIdentifier() {
+        return this.identifier;
+    }
+ 
     /**
      * Abstract method for get type 
      * @return type of message : "advertisement", "search", "download"

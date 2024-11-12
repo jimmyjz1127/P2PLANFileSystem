@@ -1,3 +1,5 @@
+package code;
+
 /**
  * LogFileWriter - simple logging to local file.
  

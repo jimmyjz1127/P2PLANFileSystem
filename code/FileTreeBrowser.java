@@ -6,6 +6,7 @@
  * 18 Sep 2024, checked with java 21 on CS Lab Linux machines. 
  *
  */
+package code;
 
 import java.io.File;
 import java.io.IOException;

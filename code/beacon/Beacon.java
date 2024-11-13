@@ -65,6 +65,9 @@ class Beacon
 
       logRequest = logRequest + new String(b, "US-ASCII");
       logRequest = logRequest.trim();
+
+      System.out.println("TEST : " + logRequest);
+
       c.log.writeLog(logRequest, true);
     }
 

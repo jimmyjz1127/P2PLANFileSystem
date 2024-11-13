@@ -13,19 +13,34 @@ import java.util.Date;
 
 
 public class SearchRequestMessage extends Message {
-    private String searchType;        // Search Type : none, path, path-filename, path-filename-substring
-    private String searchQuery;       // The search query
+    private String searchString;       // The search string to query
 
     /**
-     * Constructor for SearchRequestMessage.
-     * @param searchType : the type of search being done (none,path,path-filename,path-filename-substring).
-     * @param searchQuery : the query being searched. 
+     * Constructor for tx SearchRequestMessage.
+     * @param searchString : the query being searched. 
      */
-    public SearchRequestMessage(String searchType, String searchQuery) {
+    public SearchRequestMessage(String searchString) {
         super();
 
-        this.searchType = searchType;
-        this.searchQuery = searchQuery;
+        this.searchString = searchString;
+    }
+
+    /**
+     * Constructor for rx SearchRequestMessage.
+     * @param searchString  : the string to query on current machine's directory.
+     * @param timestamp     : the timestamp of the incoming advertisement.
+     * @param identifier    : the identifier of the server that sent advertisement.
+     * @param serialNo      : serialNo of received advertisement.
+     */
+    public SearchRequestMessage(String searchString, String timestamp, String identifier, long serialNo) {
+        String[] identifierArr = identifier.split("@");
+
+        String username = identifierArr[0];
+        String hostname = identifierArr[1];
+
+        super(username, hostname, timestamp, identifier, serialNo);
+
+        this.searchString = searchString;
     }
 
     /**
@@ -36,16 +51,9 @@ public class SearchRequestMessage extends Message {
     }
 
     /**
-     * Getter function for search type 
-     */
-    public String getSearchType() {
-        return searchType;
-    }
-
-    /**
      * Getter function for searchQuery.
      */
-    public String getSearchQuery() {
-        return searchQuery;
+    public String getSearchString() {
+        return searchString;
     }
 }

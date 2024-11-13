@@ -30,7 +30,7 @@ public abstract class Message() {
     private String identifier;              // The identifier of message (e.g FQDN)
 
     /**
-     * Constructor for Message Object.
+     * Constructor for tx Message Object.
      */
     public Message() {
         try {
@@ -46,10 +46,26 @@ public abstract class Message() {
         this.serialNo = System.currentTimeMillis();
     }
 
+    /**
+     * Constructor for rx Message object.
+     * @param username     : username in identifier of message.
+     * @param hostname     : the hostname in identifier of message.
+     * @param timestamp    : the timestamp of incoming message.
+     * @param identifier   : the identifier of the remote machine that sent message.
+     * @param serialNo     : unique serial number of message.
+     */
+    public Message(String username, String hostname, String timestamp, String identifier, long serialNo) {
+        this.username = username;
+        this.hostname = hostname;
+        this.timestamp = timestamp;
+        this.identifier = identifier;
+        this.serialNo = serialNo;
+    }
+
 
     /**
      * Converts a time stamp string in format of "yyyyMMdd-HHmmss.SSS" to Date object
-     * @param timestamp : the 
+     * @param timestamp : the timestamp in string format
      */
     public Date timestampToDate(String timestamp) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");

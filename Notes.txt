@@ -1,0 +1,17 @@
+## ADVERTISEMENT 
+: <identifier> : <serialNo> : <timestamp> : "advertisement" : <server-port> : <services> : 
+
+
+## SEARCH REQUEST 
+: <identifier> : <serialNo> : <timestamp> : "search-request" : <search-string> : 
+
+## SEARCH RESULT 
+: <identifier> : <serialNo> : <timestamp> : "search-result" : <response-id> : <file-string> : 
+
+## SEARCH ERROR 
+: <identifier> : <serialNo> : <timestamp> : "search-error" : <response-id> :
+
+
+
+Questions:
+1. Should serialNo of each message be unique, or should request-response pairs have the same serialNo?

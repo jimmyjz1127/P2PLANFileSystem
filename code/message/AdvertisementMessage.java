@@ -15,12 +15,15 @@ import java.util.Date;
  * AdvertisementMessage child class of Message class.
  */
 public class AdvertisementMessage extends Message {
-    private String service;                     // beacon, search, download, ...
-    private int serverPort;                     // port number of server listening for incoming connections  
+    // private String service;                     // beacon, search, download, ...
+    private int serverPort;                     // port the server (which sent advertisement) is listening on  
     private boolean searchPossible = false;     // boolean for whether search capability is possible
     private boolean downloadPossible = false;   // boolean for whether download capability is possible 
-    private String searchType;                  // Search Type : none, path, path-filename, path-filename-substring
 
+    /**
+     * Constructor for tx AdvertisementMessage.
+     * @param configuration : the current machine's configuration.
+     */
     public AdvertisementMessage(Configuration configuration) {
         super();
 
@@ -28,6 +31,32 @@ public class AdvertisementMessage extends Message {
         this.searchPossible = configuration.search;
         this.downloadPossible = configuration.download;
         this.searchType = configuration.searchType;
+    }
+
+    /**
+     * Constructor for rx AdvertisementMessage. 
+     * @param serverPort : the port of the remote server that sent advertisement.
+     * @param timestamp  : the timestamp of the incoming advertisement.
+     * @param identifier : the identifier of the server that sent advertisement.
+     * @param serialNo   : serialNo of received advertisement.
+     */
+    public AdvertisementMessage(int serverPort, String timestamp, String identifier, long serialNo) {
+        String[] identifierArr = identifier.split("@");
+
+        String username = identifierArr[0];
+        String hostname = identifierArr[1];
+
+        super(username, hostname, timestamp, identifier, serialNo);
+
+        this.serverPort = serverPort;
+    }
+
+    /**
+     * Setter function for serverPort.
+     * @param serverPort : the server port 
+     */
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 
     /**

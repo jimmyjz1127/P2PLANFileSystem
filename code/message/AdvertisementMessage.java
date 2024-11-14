@@ -111,10 +111,9 @@ public class AdvertisementMessage extends Message {
         return downloadPossible;
     }
 
-    /**
-     * 
-     */
-    public String getSearchType() {
-        return searchType;
+    public String getServicesString() {
+        return "Search=" + searchPossible + ", " + "Download=" + downloadPossible;
     }
+
+
 }

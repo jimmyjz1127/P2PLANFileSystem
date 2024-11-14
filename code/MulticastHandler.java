@@ -5,6 +5,8 @@ import code.message.*;
 import java.net.*;
 import java.util.Arrays;
 import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class for handling multicast connections.
@@ -12,9 +14,12 @@ import java.text.ParseException;
  */
 
 public class MulticastHandler implements Runnable {
-    // private MulticastSocket multicastSocket;    // socket to multicast group
     private MulticastEndpoint multicastEndpoint; 
     private Configuration configuration;
+    private ExecutorService executorService;
+
+
+    private AdvertisementReceiver advertisementReceiver;
 
 
     public MulticastHandler(Configuration configuration) {
@@ -29,6 +34,20 @@ public class MulticastHandler implements Runnable {
             multicastEndpoint.join();
             configuration.log.writeLog("Joined Multicast Group : " + this.configuration.mGroup);
 
+            // Create threadpool
+            executorService = Executors.newFixedThreadPool(7);
+
+            // Create advertisement receiver an add to threadpool
+            advertisementReceiver = new AdvertisementReceiver(this);
+            executorService.submit(advertisementReceiver); 
+
+            /**
+             * Todo : implement other receiver handlers
+             */
+
+            Thread t = new Thead(this);
+            t.start();
+
 
         } catch (Exception e) {
             System.err.println("MulticastHandler() : " + e.getMessage());
@@ -41,23 +60,43 @@ public class MulticastHandler implements Runnable {
     @Override
     public void run() {
         while (true) {
+            Message message = rxMessage();
 
+            if (message != null) {
+                switch (message.getType()) {
+                    case "advertisement":
+                        advertisementReceiver.addAdvertisement(message);
+                        break;
+                }
+            }
         }
     }
 
+    public void stopExecutorService() {
+        executorService.shutdown();
+    }
 
+
+    /**
+     * Given an incoming message (in bytes), reads into buffer, converts to string and extracts
+     * message protocol information into appropriate Message object.
+     * @return : message object containing protocol information of received message.
+     */
     public Message rxMessage() {
         // Setup buffer with max-size from configuration 
         byte[] buffer = new byte[configuration.maximumMessageSize];
 
-        // Read from group into buffer
-        multicastEndpoint.rx(buffer);
+        // Read from group into buffer and check it is not none
+        if (multicastEndpoint.rx(buffer) != MulticastEndpoint.PkyType.none) {
+            // decode bytes into string 
+            String message = new String(buffer, StandardCharsets.US_ASCII).trim();
 
-        // decode bytes into string 
-        String message = new String(buffer, StandardCharsets.US_ASCII).trim();
+            Message message = parseMessageString(message);
 
+            return message;
+        }
 
-
+        return null;
     }
 
     /**

@@ -15,3 +15,7 @@
 
 Questions:
 1. Should serialNo of each message be unique, or should request-response pairs have the same serialNo?
+
+
+Todo : 
+1. Remove any unnecessary logging in the MulticastEndpoint class

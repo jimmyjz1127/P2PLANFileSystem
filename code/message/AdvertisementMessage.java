@@ -1,5 +1,9 @@
 package code.message;
 
+import code.Configuration;
+import code.LogFileWriter;
+import code.ByteReader;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -15,7 +19,6 @@ import java.util.Date;
  * AdvertisementMessage child class of Message class.
  */
 public class AdvertisementMessage extends Message {
-    // private String service;                     // beacon, search, download, ...
     private int serverPort;                     // port the server (which sent advertisement) is listening on  
     private boolean searchPossible = false;     // boolean for whether search capability is possible
     private boolean downloadPossible = false;   // boolean for whether download capability is possible 
@@ -30,7 +33,6 @@ public class AdvertisementMessage extends Message {
         this.serverPort = configuration.mPort;
         this.searchPossible = configuration.search;
         this.downloadPossible = configuration.download;
-        this.searchType = configuration.searchType;
     }
 
     /**
@@ -39,14 +41,10 @@ public class AdvertisementMessage extends Message {
      * @param timestamp  : the timestamp of the incoming advertisement.
      * @param identifier : the identifier of the server that sent advertisement.
      * @param serialNo   : serialNo of received advertisement.
-     */
+     */ 
     public AdvertisementMessage(int serverPort, String timestamp, String identifier, long serialNo) {
-        String[] identifierArr = identifier.split("@");
-
-        String username = identifierArr[0];
-        String hostname = identifierArr[1];
-
-        super(username, hostname, timestamp, identifier, serialNo);
+        // (username, hostname, timestamp, identifier, serialNo)
+        super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
         this.serverPort = serverPort;
     }
@@ -76,14 +74,6 @@ public class AdvertisementMessage extends Message {
     }
 
     /**
-     * Setter function for searchType.
-     * @param searchType : string "none", "path", "path-filename", "path-filename-substring"
-     */
-    public void setSearchType(String searchType) {
-        this.searchType = searchType;
-    }
-
-    /**
      * Returns the a string indicating the type of message
      */
     public String getType() {
@@ -98,22 +88,48 @@ public class AdvertisementMessage extends Message {
     }
 
     /**
-     * 
+     * Returns whether the searchPossible attribute.
+     * @return the boolean searchPossible attribute.
      */
     public boolean isSearchPossible() {
         return searchPossible;
     }
 
     /**
-     * 
+     * Returns whether the downloadPossible attribute.
+     * @return the boolean downloadPossible attribute.
      */
     public boolean isDownloadPossible() {
         return downloadPossible;
     }
 
+    /**
+     * Returns a string of capable services as should be displayed
+     * in an advertisement message.
+     * @return String of format <service>=<true or false>, <service>=<true of false>
+     */
     public String getServicesString() {
-        return "Search=" + searchPossible + ", " + "Download=" + downloadPossible;
+        return "search=" + searchPossible + "," + "download=" + downloadPossible;
     }
 
+    /**
+     * 
+     */
+    @Override
+    public String toString() {
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
+        String payload = ":advertisement:" + getServerPort() + ":" + getServicesString() + ":";
 
+        return header + payload;
+    }
+
+    /**
+     * Main method for debugging and testing purposes.
+     */
+    public static void main(String[] args) {
+        Configuration conf = new Configuration("filetreebrowser.properties");
+        AdvertisementMessage msg = new AdvertisementMessage(conf);
+
+        System.out.println(msg.toString());
+    }
 }

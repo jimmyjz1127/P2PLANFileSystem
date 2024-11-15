@@ -33,12 +33,7 @@ public class SearchRequestMessage extends Message {
      * @param serialNo      : serialNo of received advertisement.
      */
     public SearchRequestMessage(String searchString, String timestamp, String identifier, long serialNo) {
-        String[] identifierArr = identifier.split("@");
-
-        String username = identifierArr[0];
-        String hostname = identifierArr[1];
-
-        super(username, hostname, timestamp, identifier, serialNo);
+        super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
         this.searchString = searchString;
     }

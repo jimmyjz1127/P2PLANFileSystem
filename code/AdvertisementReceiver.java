@@ -8,7 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * Runnable task for managing recieved advertisements from other nodes.
+ * Manages storage and cleaning of stored advertisements - to ensure 
+ * the ":nodes" command of UI returns all up-to-date advertisments.
+ * 
+ * @author 190015412
+ * @since November 2024
+ */
 public class AdvertisementReceiver implements Runnable {
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -16,6 +23,9 @@ public class AdvertisementReceiver implements Runnable {
     private final ConcurrentHashMap<String, AdvertisementMessage> advertisements;
     private final ScheduledExecutorService scheduler;
 
+    /**
+     * Constructor for AdvertisementReceiver runnable task.
+     */
     public AdvertisementReceiver(MulticastHandler multicastHandler) {
         this.multicastHandler = multicastHandler;
         this.configuration = multicastHandler.configuration;
@@ -23,6 +33,9 @@ public class AdvertisementReceiver implements Runnable {
         this.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 
+    /**
+     * Intermittently remove expired advertisements from the data structure. 
+     */
     @Override
     public void run() {
         scheduler.scheduleAtFixedRate(this::removeExpiredAdvertisements, 0, configuration.sleepTime, TimeUnit.MILLISECONDS)

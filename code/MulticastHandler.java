@@ -7,10 +7,15 @@ import java.util.Arrays;
 import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Class for handling multicast connections.
- * Implements Runnable to allow handling mulitple incoming flows using threading.
+ * Implements Runnable to allow handling mulitple incoming flows 
+ * of various types (advertisement, search-request, etc) using threading.
+ * 
+ * @author 190015412
+ * @since Novemeber 2024
  */
 
 public class MulticastHandler implements Runnable {
@@ -21,7 +26,10 @@ public class MulticastHandler implements Runnable {
 
     private AdvertisementReceiver advertisementReceiver;
 
-
+    /**
+     * Constructor for MulticastHandler.
+     * @param configuration : the configuration of the current multicast node.
+     */
     public MulticastHandler(Configuration configuration) {
         this.configuration = configuration;
 
@@ -55,7 +63,8 @@ public class MulticastHandler implements Runnable {
     }
 
     /**
-     * 
+     * Waits for incoming messagse and delegates handling of message to
+     * the appropriate thread based on the message type.
      */
     @Override
     public void run() {
@@ -92,6 +101,10 @@ public class MulticastHandler implements Runnable {
             String message = new String(buffer, StandardCharsets.US_ASCII).trim();
 
             Message message = parseMessageString(message);
+
+            if (message != null) {
+                configuration.log.writeLog("rx-> " + message.toString());
+            }
 
             return message;
         }
@@ -182,8 +195,33 @@ public class MulticastHandler implements Runnable {
         }
     }
 
+    /**
+     * Method for sending out a message into multicast group.
+     * @param message : the Message object to send out to multicast group.
+     * @return boolean indicating whether transmission was successful or not.
+     */
+    public boolean txMessage(Message message) {
+        boolean done = false;
+        byte buffer[];
 
-    public Message 
+        if (message != null) {
+            String messageString = message.toString();
+            buffer = messageString.getBytes(StandardCharsets.US_ASCII);
+         
+            // Check if message was successfully sent out
+            if (multicastEndpoint.tx(MulticastEndpoint.PktType.ip6, buffer)) {
+                done = true;
+                configuration.log.writeLog("tx-> " + messageString);
+            }         
+        } else {
+            System.err.println("MulticastHandler.txMessage() -> ERROR : Message was null.");
+        }
+        
+        return done;
+    }
+
+
+    
 
 
 }

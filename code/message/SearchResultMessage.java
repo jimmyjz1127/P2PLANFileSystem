@@ -47,12 +47,7 @@ public class SearchResultMessage extends Message {
     public SearchResultMessage(String searchFileString, long responseSerialNo, String responseIdentifier, 
                                String timestamp, String identifier, long serialNo) {
 
-        String[] identifierArr = identifier.split("@");
-
-        String username = identifierArr[0];
-        String hostname = identifierArr[1];
-
-        super(username, hostname, timestamp, identifier, serialNo);
+        super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
         this.searchFileString = searchFileString;
         this.responseSerialNo = responseSerialNo;

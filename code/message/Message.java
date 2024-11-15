@@ -1,5 +1,9 @@
 package code.message;
 
+import code.Configuration;
+import code.LogFileWriter;
+import code.ByteReader;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -17,7 +21,7 @@ import java.text.ParseException;
  * Class implementation for Message object.
  * Used to represent and contain information for any protocol message.
  */
-public abstract class Message() {
+public abstract class Message {
     // Serial number for the message header
     private long serialNo;
 
@@ -111,7 +115,7 @@ public abstract class Message() {
     /**
      * Getter function for serial number
      */
-    public String getSerialNo() {
+    public long getSerialNo() {
         return this.serialNo;
     }
 
@@ -127,5 +131,6 @@ public abstract class Message() {
      * @return type of message : "advertisement", "search", "download"
      */
     public abstract String getType();
+
 }
 

@@ -40,16 +40,11 @@ public class SearchErrorMessage extends Message {
      * @param serialNo           : serialNo of received advertisement.
      */
     public SearchErrorMessage(String responseIdentifier, long responseSerialNo, String timestamp, String identifier, long serialNo) {
-        String[] identifierArr = identifier.split("@");
-
-        String username = identifierArr[0];
-        String hostname = identifierArr[1];
-
         /**
          * responseSerialNo == serialNo
          */
 
-        super(username, hostname, timestamp, identifier, serialNo);
+        super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;

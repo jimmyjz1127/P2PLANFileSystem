@@ -63,14 +63,14 @@ public class Configuration
   public String[] searchOptions = // Could have used enum.
          {"none", "path", "path-filename", "path-filename-substring"};
   public String  searchType = "none"; // from searchOptions_
-  public String  search = false; // whether search is possible 
+  public boolean  search = false; // whether search is possible 
   public boolean download = false; // whether download is possible
 
   // these should not be loaded from a config file, of course
   public InetAddress mGroup;
   public String hostInfo;
 
-  Configuration(String file) 
+  public Configuration(String file) 
   {
     if (file != null) { propertiesFile = file; }
 
@@ -186,7 +186,7 @@ public class Configuration
             s = new String("false");
           }
           System.out.println(propertiesFile + " search: " + search + " -> " + s);
-          downlosearchad = Boolean.parseBoolean(s);
+          search = Boolean.parseBoolean(s);
         }
 
         if ((s = properties.getProperty("download")) != null) {

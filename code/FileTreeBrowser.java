@@ -64,8 +64,11 @@ public final class FileTreeBrowser {
     String userCmd = new String(list);
     boolean quitBrowser = false;
 
-    FileTreeBrowser ftb = new FileTreeBrowser(configuration.rootDir);
+    FileTreeBrowser ftb = new FileTreeBrowser("./code/" + configuration.rootDir);
+
     ftb.printList();
+
+    
 
     while(!quitBrowser) {
 
@@ -122,7 +125,6 @@ public final class FileTreeBrowser {
       if (userCmd.equalsIgnoreCase(download)) { download(); }
 
       else { // do something with pathname
-
         File f = ftb.searchList(userCmd);
 
         if (f == null) {
@@ -289,4 +291,62 @@ public final class FileTreeBrowser {
     return pathName;
   }
 
+
+  /**
+   * Method to retrieve all files and directories that substring-match a search string.
+   * @param directoryPath : the relative path to the directory to perform the search in (i.e root_dir)
+   * @param searchString : the search string provided by search-request.
+   * @return ArrayList of files whose paths/file name substring match the given search string.
+   */
+  public static ArrayList<File> getMatchingFiles(String directoryPath, String searchString) {
+    ArrayList<File> matchingFiles = new ArrayList<>();
+
+    // instantiate file object around directory to perform directory walk
+    File rootDirectory = new File(directoryPath);
+
+    // Make sure the given directory path is valid
+    if (!rootDirectory.exists() || !rootDirectory.isDirectory()) {
+      System.err.println("FileTreeBrowser.getMatchingFiles() : Error - invalid directory path.");
+      return null;
+    } 
+
+    searchDirectory(rootDirectory, searchString, "", matchingFiles);
+    return matchingFiles;
+  }
+
+  /**
+   * Helper function which recursively looks through a directory for files/sub-directories that 
+   * match a given search string.
+   * 
+   * @param currentDirectory : the current directory to perform the search in.
+   * @param searchString : the string to perform substring matching to
+   * @param relativePath : the current relative path built so far 
+   * @param matchingFiles : ArrayList of files whose paths/file name substring match the given search string.
+   */
+  public static void searchDirectory(File currentDirectory, String searchString, 
+                                     String relativePath, ArrayList<File> matchingFiles) {
+    // Obtain all files/subdirectories in current directory
+    File[] files = currentDirectory.listFiles()
+
+    if (files == null) {
+      return;
+    }
+
+    // Iterate through files 
+    for (File file : files ) {
+      String currentRelativePath = 
+                relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
+
+      // if we get a substring match
+      if (file.getName().contains(searchString)) {
+        matchingFiles.add(file);
+      }
+
+      // if directory, further explore the sub-directory
+      if (file.isDirectory()) {
+        searchDirectory(file, searchString, currentRelativePath, matchingFiles);
+      }
+    }
+  
+  }
 }

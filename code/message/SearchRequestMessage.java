@@ -51,4 +51,25 @@ public class SearchRequestMessage extends Message {
     public String getSearchString() {
         return searchString;
     }
+
+    /**
+     * Equals method for determining if two requests,
+     *  (potentially sent from different timestamps) are the same.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Check reference equality
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        SearchRequestMessage msg = (SearchRequestMessage) obj;
+
+        return (msg.getIdentifier() == this.getIdentifier()) &&
+               (msg.getSerialNo() == this.getSerialNo())
+    }
 }

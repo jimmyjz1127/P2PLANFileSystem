@@ -19,3 +19,10 @@ Questions:
 
 Todo : 
 1. Remove any unnecessary logging in the MulticastEndpoint class
+2. move runnable tasks into runnable package
+3. The receiver tasks currently are single-threaded. That is they add incoming messages to a data structure,
+   and process messages in the data structure intermittently. Explore whether it would be better to designate 
+   a threadpool in each receiver task for multi-processing the processing of messages? So we don't have to 
+   necessarily create a new thread to handle each new incoming message, but rather have a fixed pool which may 
+   be an improvement on the single-thread architecture.
+4. make sure file paths work with the packaging arrangement

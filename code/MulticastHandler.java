@@ -23,6 +23,7 @@ public class MulticastHandler implements Runnable {
     private MulticastEndpoint multicastEndpoint; 
     private Configuration configuration;
     private ScheduledExecutorService scheduler;
+    private FileTreeBrowser fileTreeBrowser;
 
 
     private AdvertisementReceiver advertisementReceiver;
@@ -30,9 +31,11 @@ public class MulticastHandler implements Runnable {
     /**
      * Constructor for MulticastHandler.
      * @param configuration : the configuration of the current multicast node.
+     * @param fileTreeBrowser : FileTreeBrowser object (associated with configuration object)
      */
-    public MulticastHandler(Configuration configuration) {
+    public MulticastHandler(Configuration configuration, FileTreeBrowser fileTreeBrowser) {
         this.configuration = configuration;
+        this.fileTreeBrowser = fileTreeBrowser;
 
         try {
             // Initialize multicast socket with configurations
@@ -78,12 +81,17 @@ public class MulticastHandler implements Runnable {
     @Override
     public void run() {
         while (true) {
+            // Receive incoming message
             Message message = rxMessage();
 
             if (message != null) {
+                // Determine message type and delegate to appropriate task thread
                 switch (message.getType()) {
                     case "advertisement":
                         advertisementReceiver.addAdvertisement(message);
+                        break;
+                    case "search-request" :
+                        
                         break;
                 }
             }
@@ -91,7 +99,7 @@ public class MulticastHandler implements Runnable {
     }
 
     public void stopExecutorService() {
-        executorService.shutdown();
+        scheduler.shutdown();
     }
 
 

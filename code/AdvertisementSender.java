@@ -18,8 +18,6 @@ public class AdvertisementSender implements Runnable {
     private MulticastHandler multicastHandler;
     private Configuration configuration;
 
-    private final ScheduledExecutorService scheduler;
-
     /**
      * Constructor for AdvertisementSender Runnable task for sending out advertisements 
      * to Multicast group.
@@ -29,23 +27,14 @@ public class AdvertisementSender implements Runnable {
     public AdvertisementSender(MulticastHandler multicastHandler) {
         this.multicastHandler = multicastHandler;
         this.configuration = multicastHandler.configuration;
-        his.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 
 
     /**
-     * Send out advertisement message to multicast group at an interval.
+     * Send out advertisement message to multicast group task.
      */
     @Override
     public void run() {
-        scheduler.scheduleAtFixedRate(this::txAdvertisement, 0, configuration.sleepTime, TimeUnit.MILLISECONDS)
-    }
-
-    /**
-     * Function for sending tx advertisement to other nodes in multicast group.
-     * To be called by thread scheduler.
-     */
-    public void txAdvertisement() {
         AdvertisementMessage txMessage = new AdvertisementMessage(configuration);
 
         multicastHandler.txMessage(txMessage)

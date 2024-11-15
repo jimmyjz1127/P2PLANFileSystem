@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Class for handling multicast connections.
@@ -21,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 public class MulticastHandler implements Runnable {
     private MulticastEndpoint multicastEndpoint; 
     private Configuration configuration;
-    private ExecutorService executorService;
+    private ScheduledExecutorService scheduler;
 
 
     private AdvertisementReceiver advertisementReceiver;
@@ -42,12 +43,20 @@ public class MulticastHandler implements Runnable {
             multicastEndpoint.join();
             configuration.log.writeLog("Joined Multicast Group : " + this.configuration.mGroup);
 
-            // Create threadpool
-            executorService = Executors.newFixedThreadPool(7);
+            // Create scheduled threadpool
+            scheduler = Executors.newScheduledThreadPool(7);
 
             // Create advertisement receiver an add to threadpool
             advertisementReceiver = new AdvertisementReceiver(this);
-            executorService.submit(advertisementReceiver); 
+            // Schedule the advertisement receiver task (of removing expired advertisements)
+            scheduler.scheduleAtFixedRate(advertisementReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
+
+            // Create advertisement sender and add to threadpool
+            advertisementSender = new AdvertisementSender(this);
+            // Schedule the advertisement sender to send out ad at an interval
+            scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
+
+
 
             /**
              * Todo : implement other receiver handlers

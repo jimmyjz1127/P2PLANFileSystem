@@ -21,7 +21,7 @@ public class AdvertisementReceiver implements Runnable {
     private Configuration configuration;
 
     private final ConcurrentHashMap<String, AdvertisementMessage> advertisements;
-    private final ScheduledExecutorService scheduler;
+    // private final ScheduledExecutorService scheduler;
 
     /**
      * Constructor for AdvertisementReceiver runnable task.
@@ -30,7 +30,7 @@ public class AdvertisementReceiver implements Runnable {
         this.multicastHandler = multicastHandler;
         this.configuration = multicastHandler.configuration;
         this.advertisements = new ConcurrentHashMap<>();
-        this.scheduler = Executors.newSingleThreadScheduledExecutor();
+        // this.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 
     /**
@@ -38,7 +38,8 @@ public class AdvertisementReceiver implements Runnable {
      */
     @Override
     public void run() {
-        scheduler.scheduleAtFixedRate(this::removeExpiredAdvertisements, 0, configuration.sleepTime, TimeUnit.MILLISECONDS)
+        // scheduler.scheduleAtFixedRate(this::removeExpiredAdvertisements, 0, configuration.sleepTime, TimeUnit.MILLISECONDS)
+        removeExpiredAdvertisements();
     }
 
     /**

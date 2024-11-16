@@ -37,7 +37,7 @@ public class SearchReceiver implements Runnable {
      */
     @Override
     public void run() {
-
+        processSearchRequests();
     }
 
 
@@ -61,21 +61,27 @@ public class SearchReceiver implements Runnable {
             String serialNo   = msg.getSerialNo();
             String timestamp  = msg.getTimeStamp();
 
+            ArrayList<File> matchingFiles = fileTreeBrowser.getMatchingFiles(searchString);
 
+            // If no matching results were found 
+            if (matchingFiles == null || matchingFiles.isEmpty()) {
+                SearchErrorMessage response = new SearchErrorMessage(identifier, serialNo);
+                multicastHandler.txMessage(response)
+            } else {
+                // iterate through each result and send separate search-result for each
+                for (File file : matchingFiles) {
+                    String rootDir = configuration.rootDir;
+
+                    // Get path relative to root_dir
+                    String path = rootDir + file.getAbsolutePath.split(rootDir)[1];
+                    SearchResultMessage response = new SearchResultMessage(identifier, serialNo, searchString);
+
+                    multicastHandler.txMessage(response);
+                }
+            }
         }
     }
 
-
-    /**
-     * Given a search string, returns the absolute path (as string) of all 
-     * files and directories that substring-match the search string 
-     * 
-     * @param searchString : the string being queried (filename, filepath, substring)
-     * @return ArrayList of matched results.
-     */
-    public ArrayList<String> searchForFile(String searchString) {
-
-    }
 
 
     /**

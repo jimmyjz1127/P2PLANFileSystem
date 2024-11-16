@@ -57,4 +57,16 @@ public class SearchErrorMessage extends Message {
     public String getType() {
         return "search-error";
     }
+
+    /**
+     * toString() method to convert message protocol data into appropriate message string.
+     * <current identifier> : <serialNo of requester> : <current timestamp> : "search-error" : <identifier of requester> : 
+     */
+    @Override
+    public String toString() {
+        String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" getTimeStamp();
+        String payload = ":search-error:" + responseIdentifier + ":";
+
+        return header + payload;
+    }
 }

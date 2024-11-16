@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.UnknownHostException; // used once network code is added
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 public final class FileTreeBrowser {
 
@@ -31,7 +32,7 @@ public final class FileTreeBrowser {
   static Configuration configuration;
   static String rootPath = "";
 
-  File   thisDir;  // this directory
+  static File   thisDir;  // this directory
   String thisDirName;  // name of this directory
   SimpleDateFormat sdf;
 
@@ -67,8 +68,6 @@ public final class FileTreeBrowser {
     FileTreeBrowser ftb = new FileTreeBrowser("./code/" + configuration.rootDir);
 
     ftb.printList();
-
-    
 
     while(!quitBrowser) {
 
@@ -294,15 +293,15 @@ public final class FileTreeBrowser {
 
   /**
    * Method to retrieve all files and directories that substring-match a search string.
-   * @param directoryPath : the relative path to the directory to perform the search in (i.e root_dir)
    * @param searchString : the search string provided by search-request.
    * @return ArrayList of files whose paths/file name substring match the given search string.
    */
-  public static ArrayList<File> getMatchingFiles(String directoryPath, String searchString) {
+  public static ArrayList<File> getMatchingFiles(String searchString) {
     ArrayList<File> matchingFiles = new ArrayList<>();
 
     // instantiate file object around directory to perform directory walk
-    File rootDirectory = new File(directoryPath);
+    // File rootDirectory = new File(thisDir); // thisDir = root_dir
+    File rootDirectory = thisDir;
 
     // Make sure the given directory path is valid
     if (!rootDirectory.exists() || !rootDirectory.isDirectory()) {
@@ -326,7 +325,7 @@ public final class FileTreeBrowser {
   public static void searchDirectory(File currentDirectory, String searchString, 
                                      String relativePath, ArrayList<File> matchingFiles) {
     // Obtain all files/subdirectories in current directory
-    File[] files = currentDirectory.listFiles()
+    File[] files = currentDirectory.listFiles();
 
     if (files == null) {
       return;

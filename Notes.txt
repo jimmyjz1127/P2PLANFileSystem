@@ -9,7 +9,7 @@
 : <identifier> : <serialNo> : <timestamp> : "search-result" : <response-id> : <file-string> : 
 
 ## SEARCH ERROR 
-: <identifier> : <serialNo> : <timestamp> : "search-error" : <response-id> :
+: <current identifier> : <request serialNo> : <timestamp> : "search-error" : <response-id (of requester)> :
 
 
 
@@ -26,3 +26,5 @@ Todo :
    necessarily create a new thread to handle each new incoming message, but rather have a fixed pool which may 
    be an improvement on the single-thread architecture.
 4. make sure file paths work with the packaging arrangement
+5. Consider putting incoming searchrequest messages and outgoing searchrequest messages in the same datastructure 
+    could multi-thread the processing of search-request messages out of the structure 

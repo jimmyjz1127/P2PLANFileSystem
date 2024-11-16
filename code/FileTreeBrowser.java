@@ -8,6 +8,7 @@
  */
 package code;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +67,7 @@ public final class FileTreeBrowser {
     boolean quitBrowser = false;
 
     FileTreeBrowser ftb = new FileTreeBrowser("./code/" + configuration.rootDir);
+    MulticastHandler muilticastHandler = new MulticastHandler(configuration, ftb);
 
     ftb.printList();
 
@@ -114,7 +116,10 @@ public final class FileTreeBrowser {
 
       //  list discovered servers
       else
-      if (userCmd.equalsIgnoreCase(nodes)) { nodes(); }
+      if (userCmd.equalsIgnoreCase(nodes)) {
+        String advertisements = multicastHandler.advertisementReceiver.getAdvertisementsString();
+        System.out.println(advertisements);
+      }
 
       else
       if (userCmd.equalsIgnoreCase(search)) { search(); }

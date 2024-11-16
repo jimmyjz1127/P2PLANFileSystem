@@ -16,24 +16,26 @@ import java.util.concurrent.TimeUnit;
  * @author 190015412
  * @since November 2024
  */
-public class SearchReceiver implements Runnable {
+public class SearchRequestReceiver implements Runnable {
     private MulticastHandler multicastHandler;
     private Configuration configuration;
     private FileTreeBrowser fileTreeBrowser;
     private final BlockingQueue<SearchRequestMessage> searchRequests;
 
     /**
-     * 
+     * Constructor. 
      */
-    public SearchReceiver(MulticastHandler multicastHandler, FileTreeBrowser fileTreeBrowser) {
+    public SearchRequestReceiver(MulticastHandler multicastHandler, FileTreeBrowser fileTreeBrowser) {
         this.multicastHandler = multicastHandler;
         this.configuration = multicastHandler.configuration;
         this.fileTreeBrowser = fileTreeBrowser;
-        this.searchRequests = new ConcurrentHashMap<>();
+        this.searchRequests = new LinkedBlockingQueue<>();
     }
 
     /**
-     * 
+     * Process a rx search-request messages
+     * This task should be scheduled by threadpool to constantly be processing 
+     * received search-request messages at some interval.
      */
     @Override
     public void run() {

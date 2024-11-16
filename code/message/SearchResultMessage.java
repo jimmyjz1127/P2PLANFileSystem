@@ -55,10 +55,10 @@ public class SearchResultMessage extends Message {
     }
 
     /**
-     * Getter function for searchFilePath.
+     * Getter function for searchResultString.
      */
-    public String getSearchFilePath() {
-        return searchFilePath;
+    public String getSearchResultString() {
+        return searchResultString;
     }
 
     /**

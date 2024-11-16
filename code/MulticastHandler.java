@@ -27,6 +27,9 @@ public class MulticastHandler implements Runnable {
 
 
     private AdvertisementReceiver advertisementReceiver;
+    private AdvertisementSender advertisementSender;
+    private SearchRequestReceiver searchRequestReceiver;
+    private SearchResultReceiver searchResultReceiver;
 
     /**
      * Constructor for MulticastHandler.
@@ -49,6 +52,8 @@ public class MulticastHandler implements Runnable {
             // Create scheduled threadpool
             scheduler = Executors.newScheduledThreadPool(7);
 
+
+
             // Create advertisement receiver an add to threadpool
             advertisementReceiver = new AdvertisementReceiver(this);
             // Schedule the advertisement receiver task (of removing expired advertisements)
@@ -59,6 +64,15 @@ public class MulticastHandler implements Runnable {
             // Schedule the advertisement sender to send out ad at an interval
             scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
+            // Create search request receiever and add to threadpool
+            searchRequestReceiver = new SearchRequestReceiver(this, fileTreeBrowser);
+            // Schedule the receiver to process received search-requests at some interval 
+            scheduler.scheduleAtFixedRate(searchRequestReceiver, 0, configuration.sleepTime, TimeUNit.MILLISECONDS);
+
+            // Create search response receiver task which process incoming search responses
+            searchResponseReceiver = new SearchResponseReceiver(this);
+            // submit task to threadpool to run constantly 
+            scheduler.submit(searchResponseReceiver);
 
 
             /**
@@ -91,7 +105,10 @@ public class MulticastHandler implements Runnable {
                         advertisementReceiver.addAdvertisement(message);
                         break;
                     case "search-request" :
-                        
+                        searchRequestReceiver.addSearchRequest(message);
+                        break;
+                    case "" :
+                        searchResponseReceiver.addSearchResponse(message);
                         break;
                 }
             }
@@ -185,10 +202,10 @@ public class MulticastHandler implements Runnable {
                 String responseIdentifier = payload[0]; 
                 // should be same serial no as used for tx search-request
                 String responseSerialNo   = Long.parseLong(payload[1]); 
-                String searchFileString   = payload[2];
+                String searchResultString = payload[2];
 
                 SearchResultMessage searchResultMessage = 
-                                        new SearchResultMessage(searchFileString, responseSerialNo, responseIdentifier, timestamp, identifier, serialNo);
+                                        new SearchResultMessage(searchResultString, responseSerialNo, responseIdentifier, timestamp, identifier, serialNo);
 
                 return searchResultMessage;
                 break;
@@ -238,7 +255,15 @@ public class MulticastHandler implements Runnable {
     }
 
 
-    
+    /**
+     * Method to send out tx search-request message 
+     * In resposne to user using ":search" command
+     */
+    public boolean txSearchRequest(String searchString)  {
+        SearchRequestMessage searchRequestMessage = new SearchRequestMessage(searchString);
+
+        txMessage(searchRequestMessage);
+    }
 
 
 }

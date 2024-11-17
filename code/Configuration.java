@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.net.NetworkInterface;
 //https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Properties.html
 import java.util.Properties;
 
@@ -50,6 +51,9 @@ public class Configuration
   public String  id; // System.getProperty("user.name") @ fqdn;
   public int     maximumMessageSize = 500; // bytes
   public int     maximumAdvertisementPeriod = 1000; // ms
+
+  public NetworkInterface nif = null;
+  public final String zeroAddr = "0"; // to indicate a "null" address
 
   public Boolean checkOption(String value, String[] optionList) {
     boolean found = false;
@@ -87,6 +91,9 @@ public class Configuration
     }
 
     try {
+      InetAddress ip4 = InetAddress.getLocalHost(); // assumes IPv4!
+      nif = NetworkInterface.getByInetAddress(ip4); // assume the "main" interface
+
       id = new String(System.getProperty("user.name") + "@" + h);
       logFile = new String(id + "-log.log");
 

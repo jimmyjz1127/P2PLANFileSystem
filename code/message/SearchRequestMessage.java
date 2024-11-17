@@ -70,7 +70,7 @@ public class SearchRequestMessage extends Message {
         SearchRequestMessage msg = (SearchRequestMessage) obj;
 
         return (msg.getIdentifier() == this.getIdentifier()) &&
-               (msg.getSerialNo() == this.getSerialNo())
+               (msg.getSerialNo() == this.getSerialNo());
     }
 
     /**
@@ -78,7 +78,7 @@ public class SearchRequestMessage extends Message {
      */
     @Override
     public String toString() {
-        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimeStamp();
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
         String payload = ":search-request:" + searchString + ":";
 
         return header + payload;

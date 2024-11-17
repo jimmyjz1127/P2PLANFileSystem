@@ -187,7 +187,7 @@ public class MulticastEndpoint
     //   mGroup = mGroup4;
     // }
 
-    else if (p == PktType.ip6) {
+    if (p == PktType.ip6) {
       if (mGroup6 == null) return false;
       mGroup = mGroup6;
     }

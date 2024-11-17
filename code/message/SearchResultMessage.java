@@ -75,8 +75,8 @@ public class SearchResultMessage extends Message {
      */
     @Override 
     public String toString() {
-        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimeStamp();
-        String payload = ":search-result:" + responseIdentifier + ":" + responseSerialNo + ":" searchResultString + ":";
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
+        String payload = ":search-result:" + responseIdentifier + ":" + responseSerialNo + ":" + searchResultString + ":";
         return header + payload; 
     } 
 }

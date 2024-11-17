@@ -1,5 +1,7 @@
 package code;
 
+import code.message.Message;
+import code.message.SearchResultMessage;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -19,8 +21,8 @@ public class SearchResponseReceiver implements Runnable {
     /**
      * 
      */
-    public searchResponseReceiver(Multicasthandler multicastHandler) {
-        this.multicastHandler = muticastHandler;
+    public SearchResponseReceiver(MulticastHandler multicastHandler) {
+        this.multicastHandler = multicastHandler;
         this.configuration = multicastHandler.configuration;
         this.searchResponses = new LinkedBlockingQueue<>();
     }
@@ -42,7 +44,8 @@ public class SearchResponseReceiver implements Runnable {
     }
 
     /**
-     * 
+     * Takes a search-response message and prints out its details according to type or response.
+     * @param responseMessage : a search-response message either of type SearchResultMessage or SearchErrorMessage
      */
     public void processSearchResults(Message responseMessage) {
         if (responseMessage.getType().equals("search-result")) {

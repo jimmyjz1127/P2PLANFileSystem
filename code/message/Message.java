@@ -71,9 +71,13 @@ public abstract class Message {
      * Converts a time stamp string in format of "yyyyMMdd-HHmmss.SSS" to Date object
      * @param timestamp : the timestamp in string format
      */
-    public Date timestampToDate(String timestamp) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");
-        return simpleDateFormat.parse(timestamp);
+    public Date timestampToDate(String timestamp) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");
+            return simpleDateFormat.parse(timestamp);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     /**

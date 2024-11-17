@@ -1,5 +1,6 @@
 package code; 
 
+import code.message.*;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
@@ -35,8 +36,11 @@ public class AdvertisementSender implements Runnable {
      */
     @Override
     public void run() {
-        AdvertisementMessage txMessage = new AdvertisementMessage(configuration);
+        while (true) {
+            AdvertisementMessage txMessage = new AdvertisementMessage(configuration);
 
-        multicastHandler.txMessage(txMessage)
+            multicastHandler.txMessage(txMessage);
+        }
+        
     }
 }

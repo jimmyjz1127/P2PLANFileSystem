@@ -16,6 +16,7 @@ import java.net.UnknownHostException; // used once network code is added
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public final class FileTreeBrowser {
 
@@ -66,8 +67,8 @@ public final class FileTreeBrowser {
     String userCmd = new String(list);
     boolean quitBrowser = false;
 
-    FileTreeBrowser ftb = new FileTreeBrowser("./code/" + configuration.rootDir);
-    MulticastHandler muilticastHandler = new MulticastHandler(configuration, ftb);
+    FileTreeBrowser ftb = new FileTreeBrowser(configuration.rootDir);
+    MulticastHandler multicastHandler = new MulticastHandler(configuration);
 
     ftb.printList();
 
@@ -85,7 +86,10 @@ public final class FileTreeBrowser {
       if (userCmd.isBlank()) { continue; }
 
       // quit
-      if (userCmd.equalsIgnoreCase(quit)) { quitBrowser = true; }
+      if (userCmd.equalsIgnoreCase(quit)) { 
+        quitBrowser = true; 
+        System.exit(1);
+      }
 
       // help message
       else
@@ -117,12 +121,11 @@ public final class FileTreeBrowser {
       //  list discovered servers
       else
       if (userCmd.equalsIgnoreCase(nodes)) {
-        String advertisements = multicastHandler.advertisementReceiver.getAdvertisementsString();
-        System.out.println(advertisements);
+        multicastHandler.advertisementReceiver.getAdvertisementsString();
       }
 
       else
-      if (userCmd.equalsIgnoreCase(search)) { search(); }
+      if (userCmd.equalsIgnoreCase(search)) { search(multicastHandler); }
 
       // download
       else
@@ -223,8 +226,21 @@ public final class FileTreeBrowser {
     System.out.println("\n * nodes: TBC");
   }
 
-  static void search() { // TBC
-    System.out.println("\n * search: TBC");
+  static void search(MulticastHandler multicastHandler) { 
+    System.out.print("\n Please enter your search string : ");
+    Scanner scanner = new Scanner(System.in);
+
+    String searchString = scanner.nextLine();
+
+    if (searchString == null || searchString.strip() == "") {
+      System.out.println("Search string cannot be empty.");
+      return;
+    }
+
+    System.out.println("Searching multicast group for : " + searchString);
+
+    multicastHandler.txSearchRequest(searchString);
+
   }
 
   static void download() { // TBC
@@ -296,61 +312,5 @@ public final class FileTreeBrowser {
   }
 
 
-  /**
-   * Method to retrieve all files and directories that substring-match a search string.
-   * @param searchString : the search string provided by search-request.
-   * @return ArrayList of files whose paths/file name substring match the given search string.
-   */
-  public static ArrayList<File> getMatchingFiles(String searchString) {
-    ArrayList<File> matchingFiles = new ArrayList<>();
-
-    // instantiate file object around directory to perform directory walk
-    // File rootDirectory = new File(thisDir); // thisDir = root_dir
-    File rootDirectory = thisDir;
-
-    // Make sure the given directory path is valid
-    if (!rootDirectory.exists() || !rootDirectory.isDirectory()) {
-      System.err.println("FileTreeBrowser.getMatchingFiles() : Error - invalid directory path.");
-      return null;
-    } 
-
-    searchDirectory(rootDirectory, searchString, "", matchingFiles);
-    return matchingFiles;
-  }
-
-  /**
-   * Helper function which recursively looks through a directory for files/sub-directories that 
-   * match a given search string.
-   * 
-   * @param currentDirectory : the current directory to perform the search in.
-   * @param searchString : the string to perform substring matching to
-   * @param relativePath : the current relative path built so far 
-   * @param matchingFiles : ArrayList of files whose paths/file name substring match the given search string.
-   */
-  public static void searchDirectory(File currentDirectory, String searchString, 
-                                     String relativePath, ArrayList<File> matchingFiles) {
-    // Obtain all files/subdirectories in current directory
-    File[] files = currentDirectory.listFiles();
-
-    if (files == null) {
-      return;
-    }
-
-    // Iterate through files 
-    for (File file : files ) {
-      String currentRelativePath = 
-                relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
-
-      // if we get a substring match
-      if (file.getName().contains(searchString)) {
-        matchingFiles.add(file);
-      }
-
-      // if directory, further explore the sub-directory
-      if (file.isDirectory()) {
-        searchDirectory(file, searchString, currentRelativePath, matchingFiles);
-      }
-    }
   
-  }
 }

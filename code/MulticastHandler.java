@@ -2,6 +2,7 @@ package code;
 
 import code.message.*;
 
+import java.io.File;
 import java.net.*;
 import java.util.Arrays;
 import java.text.ParseException;
@@ -9,6 +10,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit ;
+import java.util.ArrayList;
 
 /**
  * Class for handling multicast connections.
@@ -21,24 +24,20 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class MulticastHandler implements Runnable {
     private MulticastEndpoint multicastEndpoint; 
-    private Configuration configuration;
+    public Configuration configuration;
     private ScheduledExecutorService scheduler;
-    private FileTreeBrowser fileTreeBrowser;
 
-
-    private AdvertisementReceiver advertisementReceiver;
-    private AdvertisementSender advertisementSender;
-    private SearchRequestReceiver searchRequestReceiver;
-    private SearchResultReceiver searchResultReceiver;
+    public AdvertisementReceiver advertisementReceiver;
+    public AdvertisementSender advertisementSender;
+    public SearchRequestReceiver searchRequestReceiver;
+    public SearchResponseReceiver searchResponseReceiver;
 
     /**
      * Constructor for MulticastHandler.
      * @param configuration : the configuration of the current multicast node.
-     * @param fileTreeBrowser : FileTreeBrowser object (associated with configuration object)
      */
-    public MulticastHandler(Configuration configuration, FileTreeBrowser fileTreeBrowser) {
+    public MulticastHandler(Configuration configuration) {
         this.configuration = configuration;
-        this.fileTreeBrowser = fileTreeBrowser;
 
         try {
             // Initialize multicast socket with configurations
@@ -52,22 +51,22 @@ public class MulticastHandler implements Runnable {
             // Create scheduled threadpool
             scheduler = Executors.newScheduledThreadPool(7);
 
-
-
             // Create advertisement receiver an add to threadpool
             advertisementReceiver = new AdvertisementReceiver(this);
             // Schedule the advertisement receiver task (of removing expired advertisements)
             scheduler.scheduleAtFixedRate(advertisementReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
-
+            
             // Create advertisement sender and add to threadpool
             advertisementSender = new AdvertisementSender(this);
             // Schedule the advertisement sender to send out ad at an interval
-            scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
+            // scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
+            scheduler.submit(advertisementSender);
+
 
             // Create search request receiever and add to threadpool
-            searchRequestReceiver = new SearchRequestReceiver(this, fileTreeBrowser);
+            searchRequestReceiver = new SearchRequestReceiver(this);
             // Schedule the receiver to process received search-requests at some interval 
-            scheduler.scheduleAtFixedRate(searchRequestReceiver, 0, configuration.sleepTime, TimeUNit.MILLISECONDS);
+            scheduler.scheduleAtFixedRate(searchRequestReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
             // Create search response receiver task which process incoming search responses
             searchResponseReceiver = new SearchResponseReceiver(this);
@@ -79,7 +78,7 @@ public class MulticastHandler implements Runnable {
              * Todo : implement other receiver handlers
              */
 
-            Thread t = new Thead(this);
+            Thread t = new Thread(this);
             t.start();
 
 
@@ -102,10 +101,10 @@ public class MulticastHandler implements Runnable {
                 // Determine message type and delegate to appropriate task thread
                 switch (message.getType()) {
                     case "advertisement":
-                        advertisementReceiver.addAdvertisement(message);
+                        advertisementReceiver.addAdvertisement((AdvertisementMessage) message);
                         break;
                     case "search-request" :
-                        searchRequestReceiver.addSearchRequest(message);
+                        searchRequestReceiver.addSearchRequest((SearchRequestMessage) message);
                         break;
                     case "" :
                         searchResponseReceiver.addSearchResponse(message);
@@ -130,11 +129,11 @@ public class MulticastHandler implements Runnable {
         byte[] buffer = new byte[configuration.maximumMessageSize];
 
         // Read from group into buffer and check it is not none
-        if (multicastEndpoint.rx(buffer) != MulticastEndpoint.PkyType.none) {
+        if (multicastEndpoint.rx(buffer) != MulticastEndpoint.PktType.none) {
             // decode bytes into string 
-            String message = new String(buffer, StandardCharsets.US_ASCII).trim();
+            String messageString = new String(buffer, StandardCharsets.US_ASCII).trim();
 
-            Message message = parseMessageString(message);
+            Message message = parseMessageString(messageString);
 
             if (message != null) {
                 configuration.log.writeLog("rx-> " + message.toString());
@@ -165,6 +164,8 @@ public class MulticastHandler implements Runnable {
         String messageType = components[4];
 
         String[] payload = Arrays.copyOfRange(components, 5, components.length);
+        Long responseSerialNo;
+        String responseIdentifier;
 
         switch (messageType) {
             case "advertisement" :
@@ -188,7 +189,6 @@ public class MulticastHandler implements Runnable {
                     }
                 }
                 return advertisementMessage;
-                break;
             case "search-request" :
                 String searchString = payload[0]; // the search string to query 
 
@@ -196,37 +196,34 @@ public class MulticastHandler implements Runnable {
                                         new SearchRequestMessage(searchString, timestamp, identifier, serialNo);
 
                 return searchRequestMessage;
-                break;
             case "search-result" :
                 // should be <current machine's identifier> : <response serialNo>
-                String responseIdentifier = payload[0]; 
+                responseIdentifier = payload[0]; 
                 // should be same serial no as used for tx search-request
-                String responseSerialNo   = Long.parseLong(payload[1]); 
+                responseSerialNo   = Long.parseLong(payload[1]); 
                 String searchResultString = payload[2];
 
                 SearchResultMessage searchResultMessage = 
                                         new SearchResultMessage(searchResultString, responseSerialNo, responseIdentifier, timestamp, identifier, serialNo);
 
                 return searchResultMessage;
-                break;
             case "search-error" :
                 // should be <current machine's identifier> : <response serialNo>
-                String responseIdentifier = payload[0]; 
+                responseIdentifier = payload[0]; 
                 // should be same serial no as used for tx search-request (responseSerialNo == serialNo)
-                String responseSerialNo   = Long.parseLong(payload[1]); 
+                responseSerialNo   = Long.parseLong(payload[1]); 
 
                 SearchErrorMessage searchErrorMessage = 
                                         new SearchErrorMessage(responseIdentifier, responseSerialNo, timestamp, identifier, serialNo);
 
                 return searchErrorMessage;
-                break;
             case "download-request" :
-
-                break;
+                return null;
             case "download-result" :
-
-                break;
-        }
+                return null;
+                
+        } // end switch 
+        return null;
     }
 
     /**
@@ -259,11 +256,69 @@ public class MulticastHandler implements Runnable {
      * Method to send out tx search-request message 
      * In resposne to user using ":search" command
      */
-    public boolean txSearchRequest(String searchString)  {
+    public void txSearchRequest(String searchString)  {
         SearchRequestMessage searchRequestMessage = new SearchRequestMessage(searchString);
 
         txMessage(searchRequestMessage);
     }
+
+    /**
+     * Method to retrieve all files and directories that substring-match a search string.
+     * @param searchString : the search string provided by search-request.
+     * @return ArrayList of files whose paths/file name substring match the given search string.
+     */
+    public ArrayList<File> getMatchingFiles(String searchString) {
+        ArrayList<File> matchingFiles = new ArrayList<>();
+
+        // instantiate file object around directory to perform directory walk
+        // File rootDirectory = new File(thisDir); // thisDir = root_dir
+        File rootDirectory = new File(configuration.rootDir);
+
+        // Make sure the given directory path is valid
+        if (!rootDirectory.exists() || !rootDirectory.isDirectory()) {
+            System.err.println("FileTreeBrowser.getMatchingFiles() : Error - invalid directory path.");
+            return null;
+        } 
+
+        searchDirectory(rootDirectory, searchString, "", matchingFiles);
+        return matchingFiles;
+    }
+
+    /**
+     * Helper function which recursively looks through a directory for files/sub-directories that 
+     * match a given search string.
+     * 
+     * @param currentDirectory : the current directory to perform the search in.
+     * @param searchString : the string to perform substring matching to
+     * @param relativePath : the current relative path built so far 
+     * @param matchingFiles : ArrayList of files whose paths/file name substring match the given search string.
+     */
+    public void searchDirectory(File currentDirectory, String searchString, 
+                                     String relativePath, ArrayList<File> matchingFiles) {
+        // Obtain all files/subdirectories in current directory
+        File[] files = currentDirectory.listFiles();
+
+        if (files == null) {
+            return;
+        }
+
+        // Iterate through files 
+        for (File file : files ) {
+            String currentRelativePath = 
+                        relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
+
+            // if we get a substring match
+            if (file.getName().contains(searchString)) {
+                matchingFiles.add(file);
+            }
+
+            // if directory, further explore the sub-directory
+            if (file.isDirectory()) {
+                searchDirectory(file, searchString, currentRelativePath, matchingFiles);
+            }
+        }
+  
+  }
 
 
 }

@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * Runnable task for managing received search-request messages from other nodes.
  * In charge of receiving incoming requests, storing them, and then responding to them
- * with search-result messages.
+ * with search-response messages.
  * 
  * 
  * @author 190015412

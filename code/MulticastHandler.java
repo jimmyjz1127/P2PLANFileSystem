@@ -41,7 +41,7 @@ public class MulticastHandler implements Runnable {
 
             configuration.log.writeLog("Multicast Endpoint Created : " + this.configuration.mAddr6 + ":" + this.configuration.mPort);
 
-            // Join the multicast group 
+            // Join the multicast group k
             multicastEndpoint.join();
             configuration.log.writeLog("Joined Multicast Group : " + this.configuration.mGroup);
 
@@ -197,24 +197,33 @@ public class MulticastHandler implements Runnable {
             case "search-result" :
                 // should be <current machine's identifier> : <response serialNo>
                 responseIdentifier = payload[0]; 
-                // should be same serial no as used for tx search-request
-                responseSerialNo   = Long.parseLong(payload[1]); 
-                String searchResultString = payload[2];
+                
+                if (responseIdentifier.equals(configuration.identifier)) {
+                     // should be same serial no as used for tx search-request
+                    responseSerialNo   = Long.parseLong(payload[1]); 
+                    String searchResultString = payload[2];
 
-                SearchResultMessage searchResultMessage = 
-                                        new SearchResultMessage(searchResultString, responseSerialNo, responseIdentifier, timestamp, identifier, serialNo);
+                    SearchResultMessage searchResultMessage = 
+                                            new SearchResultMessage(searchResultString, responseSerialNo, responseIdentifier, timestamp, identifier, serialNo);
 
-                return searchResultMessage;
+                    return searchResultMessage;
+                }
+                return null;
+               
             case "search-error" :
                 // should be <current machine's identifier> : <response serialNo>
                 responseIdentifier = payload[0]; 
-                // should be same serial no as used for tx search-request (responseSerialNo == serialNo)
-                responseSerialNo   = Long.parseLong(payload[1]); 
 
-                SearchErrorMessage searchErrorMessage = 
-                                        new SearchErrorMessage(responseIdentifier, responseSerialNo, timestamp, identifier, serialNo);
+                if (responseIdentifier.equals(configuration.identifier)) {
+                     // should be same serial no as used for tx search-request (responseSerialNo == serialNo)
+                    responseSerialNo   = Long.parseLong(payload[1]); 
 
-                return searchErrorMessage;
+                    SearchErrorMessage searchErrorMessage = 
+                                            new SearchErrorMessage(responseIdentifier, responseSerialNo, timestamp, identifier, serialNo);
+
+                    return searchErrorMessage;
+                }
+                return null;
             case "download-request" :
                 return null;
             case "download-result" :

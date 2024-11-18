@@ -53,6 +53,10 @@ public class Configuration
   public NetworkInterface nif = null;
   public final String zeroAddr = "0"; // to indicate a "null" address
 
+  public String username;
+  public String hostname;
+  public String identifier;
+
   public Boolean checkOption(String value, String[] optionList) {
     boolean found = false;
     for (String option : optionList) {
@@ -81,6 +85,9 @@ public class Configuration
     try {
       // h = InetAddress.getLocalHost().getHostName();
       h =  InetAddress.getLocalHost().getCanonicalHostName();
+      this.hostname = h;
+      this.username = System.getProperty("user.name");
+      this.identifier = this.username + "@" + this.hostname;
     }
     catch (UnknownHostException e) {
       System.out.println("Problem: " + e.getMessage());

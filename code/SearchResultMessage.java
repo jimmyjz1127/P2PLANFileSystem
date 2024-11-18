@@ -12,6 +12,10 @@ import java.util.Date;
 
 /**
  * Class for SearchResultMessage.
+ * Contains all protocol information for a search-result message 
+ * 
+ * @author 190015412 
+ * @since November 2024
  */
 public class SearchResultMessage extends Message {
     private String searchResultString;  // The path to file matching request query

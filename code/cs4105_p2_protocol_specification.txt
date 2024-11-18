@@ -165,7 +165,6 @@
 
 <download-response> := <download-result> / <download-error>
 
-
 <target-identifier> := uid @ fqdn
   # target identifier is defined the same as before, but specifies the machine from which 
   # we want to download a file from.
@@ -190,15 +189,14 @@
 <response-serial-number> := *DIGIT
   # The serial number used in corresponding download-request message
 
-<download-result> := "download-result" : <response-identifier> : <file-transfer-port> 
+<download-result> := "download-result" : <response-identifier> : file-path : <file-transfer-port> 
   # Specifices the identifier of machine which originally send out download request, along 
   # with a port number of the current machine for which the remote machine can connect to 
   # to perform TCP file transfer 
   # 
   # An example download-result to the download-request above would be : 
   # 
-  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:4105:
-
+  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:
 
 <download-error> := "download-error" : <response-id>
   # Specifies the response-id of the machine that originally sent corresponding download-request.

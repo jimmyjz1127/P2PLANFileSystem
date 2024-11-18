@@ -42,9 +42,9 @@ public class SearchResultMessage extends Message {
      * @param searchResultString : the result file string returned by remote machine.
      * @param responseSerialNo   : serial number used for original search-request
      * @param responseIdentifier : the identifier used by current machine for search-request.
-     * @param timestamp          : the timestamp of the incoming advertisement.
-     * @param identifier         : the identifier of the server that sent advertisement.
-     * @param serialNo           : serialNo of received advertisement.
+     * @param timestamp          : the timestamp of the incoming search-result.
+     * @param identifier         : the identifier of the server that sent search-result.
+     * @param serialNo           : serialNo of received search-result.
      */
     public SearchResultMessage(String searchResultString, long responseSerialNo, String responseIdentifier, 
                                String timestamp, String identifier, long serialNo) {

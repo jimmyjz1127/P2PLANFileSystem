@@ -75,4 +75,16 @@ public class DownloadRequestMessage extends Message {
     public String getTargetIdentifier() {
         return targetIdentifier;
     }
+
+
+    /**
+     * To String 
+     */
+    @Override
+    public String toString() {
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" getTimeStamp();
+        String payload = ":download-request:" + targetIdentifier + ":" + filepath + ":";
+
+        return header + payload;
+    }
 }

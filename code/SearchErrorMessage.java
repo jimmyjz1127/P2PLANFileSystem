@@ -34,8 +34,8 @@ public class SearchErrorMessage extends Message {
      * @param responseIdentifier : the identifier used by current machine for search-request.
      * @param responseSerialNo   : the same serial number used in tx search-request.
      * @param timestamp          : the timestamp of the incoming advertisement.
-     * @param identifier         : should be the same as responseSerialNo.
-     * @param serialNo           : serialNo of received advertisement.
+     * @param identifier         : identifier of sender of search-error
+     * @param serialNo           : serialNo of received advertisement - should be same as tx search-request.
      */
     public SearchErrorMessage(String responseIdentifier, long responseSerialNo, String timestamp, String identifier, long serialNo) {
         /**

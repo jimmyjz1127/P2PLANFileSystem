@@ -10,7 +10,11 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
+ * Class for download-result message.
+ * Contains protocol infomration for download-result message.
  * 
+ * @author 190015412
+ * @since November 2024
  */
 public class DownloadResultMessage extends Message {
     private String filepath;            // Path of requested file 

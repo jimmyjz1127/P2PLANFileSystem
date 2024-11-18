@@ -51,6 +51,7 @@ public class MulticastEndpoint
 
       mSocket = new MulticastSocket(c.mPort);
       mSocket.setOption(StandardSocketOptions.IP_MULTICAST_LOOP, c.loopback);
+      mSocket.setLoopbackMode(c.loopback); // added since above line doesn't work
       mSocket.setReuseAddress(c.reuseAddr); // re-use of addr on this host
       mSocket.setTimeToLive(c.mTTL); // maximum number of hops to send
       mSocket.setSoTimeout(c.soTimeout); // non-blocking socket

@@ -226,6 +226,9 @@ public final class FileTreeBrowser {
     System.out.println("\n * nodes: TBC");
   }
 
+  /**
+   * 
+   */
   static void search(MulticastHandler multicastHandler) { 
     System.out.print("\n Please enter your search string : ");
     Scanner scanner = new Scanner(System.in);
@@ -240,6 +243,9 @@ public final class FileTreeBrowser {
     System.out.println("Searching multicast group for : " + searchString);
 
     multicastHandler.txSearchRequest(searchString);
+
+    try { Thread.sleep(1000); }
+    catch (InterruptedException e) { } // Thread.sleep() - do nothing
 
   }
 

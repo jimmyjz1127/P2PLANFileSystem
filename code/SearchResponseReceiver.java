@@ -29,13 +29,9 @@ public class SearchResponseReceiver implements Runnable {
      */
     @Override 
     public void run() {
-        while (true) {
-            try {
-                Message responseMessage = searchResponses.take();
-                processSearchResults(responseMessage);
-            } catch (InterruptedException e) {
-                System.err.println("SearchResponseHandler.run() -> Exception : " + e.getMessage());
-            }
+        while (!searchResponses.isEmpty()) {
+            Message responseMessage = searchResponses.poll();
+            processSearchResults(responseMessage);
         }
     }
 

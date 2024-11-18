@@ -83,7 +83,7 @@ public class SearchRequestReceiver implements Runnable {
 
                     // Get path relative to root_dir
                     String path = rootDir + file.getAbsolutePath().split(rootDir)[1];
-                    SearchResultMessage response = new SearchResultMessage(identifier, serialNo, searchString);
+                    SearchResultMessage response = new SearchResultMessage(identifier, serialNo, path);
 
                     multicastHandler.txMessage(response);
                 }

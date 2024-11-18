@@ -29,3 +29,4 @@ Todo :
 5. Consider putting incoming searchrequest messages and outgoing searchrequest messages in the same datastructure 
     could multi-thread the processing of search-request messages out of the structure 
 6. Make sure functionality works with capabilities 
+7. MAKE SURE LOOPBACK ISNT HAPPENING

@@ -38,6 +38,7 @@ public class MulticastHandler implements Runnable {
         try {
             // Initialize multicast socket with configurations
             multicastEndpoint = new MulticastEndpoint(this.configuration);
+
             configuration.log.writeLog("Multicast Endpoint Created : " + this.configuration.mAddr6 + ":" + this.configuration.mPort);
 
             // Join the multicast group 
@@ -65,7 +66,7 @@ public class MulticastHandler implements Runnable {
             // Create search response receiver task which process incoming search responses
             searchResponseReceiver = new SearchResponseReceiver(this);
             // submit task to threadpool to run constantly 
-            scheduler.submit(searchResponseReceiver);
+            scheduler.scheduleAtFixedRate(searchResponseReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
 
             /**
@@ -100,7 +101,10 @@ public class MulticastHandler implements Runnable {
                     case "search-request" :
                         searchRequestReceiver.addSearchRequest((SearchRequestMessage) message);
                         break;
-                    case "" :
+                    case "search-result" :
+                        searchResponseReceiver.addSearchResponse(message);
+                        break;
+                    case "search-error" :
                         searchResponseReceiver.addSearchResponse(message);
                         break;
                 }

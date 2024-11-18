@@ -165,7 +165,46 @@
 
 <download-response> := <download-result> / <download-error>
 
-  # <download-request> := ...
-  # <download-result> := ...
-  # <download-error> := ...
+
+<target-identifier> := uid @ fqdn
+  # target identifier is defined the same as before, but specifies the machine from which 
+  # we want to download a file from.
+
+
+<download-request> := "download-request" : <target-identifier> : file-path
+  # A download request specifies a target host in the multicast group from which,
+  # to download a specified file string. Unlike file-string from before, the file-path 
+  # must be the specify the name and location of the file on the remote machine (and 
+  # therefore must be unique)
+  #
+  # An example download request would be : 
+  #
+  #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:root_dir/dir1/text1-1.txt:
+
+<response-identifier> := <identifier> : <serial-number>
+  # The identifier and port should be the same as was used in corresponding download-request 
+
+<file-transfer-port> := *DIGIT
+  # The port used to connect to machine containing the desired file to perform file transfer over TCP
+
+<response-serial-number> := *DIGIT
+  # The serial number used in corresponding download-request message
+
+<download-result> := "download-result" : <response-identifier> : <file-transfer-port> 
+  # Specifices the identifier of machine which originally send out download request, along 
+  # with a port number of the current machine for which the remote machine can connect to 
+  # to perform TCP file transfer 
+  # 
+  # An example download-result to the download-request above would be : 
+  # 
+  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:4105:
+
+
+<download-error> := "download-error" : <response-id>
+  # Specifies the response-id of the machine that originally sent corresponding download-request.
+  # Similar to search-error, the serial number used in the header should match that of the 
+  # corresponding request 
+  # 
+  # An example download-error to the download-request above would be : 
+  #   :saleem@my.host1:1001:20240912-170112.123:download-error:srv@my.host3.net:1001:
 

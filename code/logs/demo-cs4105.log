@@ -1,0 +1,415 @@
+20241118-212932.259| -* logFile=logs/demo-cs4105.log
+20241118-212932.260| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-212932.261| -* rootDir=root_dir
+20241118-212932.263| -* mAddr6=ff02::4105:4105
+20241118-212932.266| -* mPort=4105
+20241118-212932.266| -* mTTL=2
+20241118-212932.268| -* loopback=true
+20241118-212932.270| -* reuseAddr=false
+20241118-212932.272| -* soTimeout=10
+20241118-212932.275| -* sleepTime=1000
+20241118-212932.277| -* maximumMessageSize=1400
+20241118-212932.279| -* maximumAdvertisementPeriod=1000
+20241118-212932.281| -* search=false
+20241118-212932.283| -* download=false
+20241118-212932.303| using interface enp3s0
+20241118-212932.305| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-212932.306| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-212932.307| Joined Multicast Group : null
+20241118-212932.324| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965372315:20241118-212932.315:advertisement:4105:search=false,download=false:
+20241118-212933.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965373315:20241118-212933.315:advertisement:4105:search=false,download=false:
+20241118-212934.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965374315:20241118-212934.315:advertisement:4105:search=false,download=false:
+20241118-212935.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965375315:20241118-212935.315:advertisement:4105:search=false,download=false:
+20241118-212935.426| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965375416:20241118-212935.416:advertisement:4105:search=false,download=false:
+20241118-212936.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965376315:20241118-212936.315:advertisement:4105:search=false,download=false:
+20241118-212936.417| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965376416:20241118-212936.416:advertisement:4105:search=false,download=false:
+20241118-212937.316| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965377316:20241118-212937.316:advertisement:4105:search=false,download=false:
+20241118-212937.417| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965377416:20241118-212937.416:advertisement:4105:search=false,download=false:
+20241118-212938.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965378315:20241118-212938.315:advertisement:4105:search=false,download=false:
+20241118-212938.417| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965378416:20241118-212938.416:advertisement:4105:search=false,download=false:
+20241118-212939.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379315:20241118-212939.315:advertisement:4105:search=false,download=false:
+20241118-212939.417| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379416:20241118-212939.416:advertisement:4105:search=false,download=false:
+20241118-212939.480| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:20241118-212939.478:search-request:text1:
+20241118-212939.496| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379494:20241118-212939.494:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:root_dir/dir1/text1-1.txt:
+20241118-212939.496| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379495:20241118-212939.495:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:root_dir/dir1/text1-2.txt:
+20241118-212939.498| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379495:20241118-212939.495:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:root_dir/dir1/text1-3.txt:
+20241118-212940.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965380315:20241118-212940.315:advertisement:4105:search=false,download=false:
+20241118-212940.419| rx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965380419:20241118-212940.418:advertisement:4105:search=false,download=false:
+20241118-212941.315| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965381315:20241118-212941.315:advertisement:4105:search=false,download=false:
+ac.uk:1731965379478:root_dir/dir1/text1-1.txt:
+20241118-212939.495| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379495:20241118-212939.495:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:root_dir/dir1/text1-2.txt:
+20241118-212939.495| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965379495:20241118-212939.495:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965379478:root_dir/dir1/text1-3.txt:
+20241118-212940.316| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965380315:20241118-212940.315:advertisement:4105:search=false,download=false:
+20241118-212940.419| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965380419:20241118-212940.418:advertisement:4105:search=false,download=false:
+20241118-212941.316| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965381315:20241118-212941.315:advertisement:4105:search=false,download=false:
+20241118-212941.416| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965381416:20241118-212941.416:advertisement:4105:search=false,download=false:
+20241118-212942.315| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965382315:20241118-212942.315:advertisement:4105:search=false,download=false:
+20241118-212942.416| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965382416:20241118-212942.416:advertisement:4105:search=false,download=false:
+20241118-212943.317| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965383317:20241118-212943.317:advertisement:4105:search=false,download=false:
+20241118-212943.416| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965383416:20241118-212943.416:advertisement:4105:search=false,download=false:
+20241118-212944.416| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965384416:20241118-212944.416:advertisement:4105:search=false,download=false:
+20241118-213251.542| -* logFile=logs/demo-cs4105.log
+20241118-213251.543| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-213251.544| -* rootDir=root_dir
+20241118-213251.546| -* mAddr6=ff02::4105:4105
+20241118-213251.549| -* mPort=4105
+20241118-213251.550| -* mTTL=2
+20241118-213251.552| -* loopback=true
+20241118-213251.553| -* reuseAddr=false
+20241118-213251.556| -* soTimeout=10
+20241118-213251.559| -* sleepTime=1000
+20241118-213251.561| -* maximumMessageSize=1400
+20241118-213251.563| -* maximumAdvertisementPeriod=1000
+20241118-213251.565| -* search=false
+20241118-213251.567| -* download=false
+20241118-213251.587| using interface enp3s0
+20241118-213251.589| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213251.589| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213251.590| Joined Multicast Group : null
+20241118-213251.606| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965571598:20241118-213251.598:advertisement:4105:search=false,download=false:
+20241118-213252.598| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965572598:20241118-213252.598:advertisement:4105:search=false,download=false:
+20241118-213253.598| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965573598:20241118-213253.598:advertisement:4105:search=false,download=false:
+20241118-213254.598| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965574598:20241118-213254.598:advertisement:4105:search=false,download=false:
+20241118-213254.800| -* logFile=logs/demo-cs4105.log
+20241118-213254.800| -* id=jz75@pc7-005-l.cs.st-andrews.ac.uk
+20241118-213254.800| -* rootDir=root_dir
+20241118-213254.800| -* mAddr6=ff02::4105:4105
+20241118-213254.802| -* mPort=4105
+20241118-213254.802| -* mTTL=2
+20241118-213254.802| -* loopback=true
+20241118-213254.802| -* reuseAddr=false
+20241118-213254.803| -* soTimeout=10
+20241118-213254.803| -* sleepTime=1000
+20241118-213254.803| -* maximumMessageSize=1400
+20241118-213254.803| -* maximumAdvertisementPeriod=1000
+20241118-213254.803| -* search=false
+20241118-213254.803| -* download=false
+20241118-213254.827| using interface enp3s0
+20241118-213254.829| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213254.829| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213254.829| Joined Multicast Group : null
+20241118-213254.845| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965574836:20241118-213254.836:advertisement:4105:search=false,download=false:
+20241118-213255.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965575598:20241118-213255.598:advertisement:4105:search=false,download=false:
+20241118-213255.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965575836:20241118-213255.836:advertisement:4105:search=false,download=false:
+20241118-213256.600| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965576599:20241118-213256.599:advertisement:4105:search=false,download=false:
+20241118-213256.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965576836:20241118-213256.836:advertisement:4105:search=false,download=false:
+20241118-213257.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965577598:20241118-213257.598:advertisement:4105:search=false,download=false:
+20241118-213257.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965577836:20241118-213257.836:advertisement:4105:search=false,download=false:
+20241118-213258.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965578598:20241118-213258.598:advertisement:4105:search=false,download=false:
+20241118-213258.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965578836:20241118-213258.836:advertisement:4105:search=false,download=false:
+20241118-213259.446| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965579437:20241118-213259.437:search-request:text1:
+20241118-213259.452| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965579451:20241118-213259.451:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965579437:root_dir/dir1/text1-1.txt:
+20241118-213259.452| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965579452:20241118-213259.452:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965579437:root_dir/dir1/text1-2.txt:
+20241118-213259.452| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965579452:20241118-213259.452:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965579437:root_dir/dir1/text1-3.txt:
+20241118-213259.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965579598:20241118-213259.598:advertisement:4105:search=false,download=false:
+20241118-213259.839| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965579839:20241118-213259.839:advertisement:4105:search=false,download=false:
+20241118-213300.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965580598:20241118-213300.598:advertisement:4105:search=false,download=false:
+20241118-213300.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965580836:20241118-213300.836:advertisement:4105:search=false,download=false:
+20241118-213301.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965581598:20241118-213301.598:advertisement:4105:search=false,download=false:
+20241118-213301.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965581836:20241118-213301.836:advertisement:4105:search=false,download=false:
+20241118-213302.600| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965582599:20241118-213302.599:advertisement:4105:search=false,download=false:
+20241118-213302.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965582836:20241118-213302.836:advertisement:4105:search=false,download=false:
+20241118-213303.598| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965583598:20241118-213303.598:advertisement:4105:search=false,download=false:
+20241118-213303.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965583836:20241118-213303.836:advertisement:4105:search=false,download=false:
+20241118-213304.599| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965584598:20241118-213304.598:advertisement:4105:search=false,download=false:
+20241118-213304.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965584836:20241118-213304.836:advertisement:4105:search=false,download=false:
+20241118-213305.598| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965585598:20241118-213305.598:advertisement:4105:search=false,download=false:
+20241118-213305.839| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965585839:20241118-213305.839:advertisement:4105:search=false,download=false:
+20241118-213306.598| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965586598:20241118-213306.598:advertisement:4105:search=false,download=false:
+20241118-213306.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965586836:20241118-213306.836:advertisement:4105:search=false,download=false:
+20241118-213307.598| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965587598:20241118-213307.598:advertisement:4105:search=false,download=false:
+20241118-213307.837| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965587836:20241118-213307.836:advertisement:4105:search=false,download=false:
+20241118-213524.766| -* logFile=logs/demo-cs4105.log
+20241118-213524.767| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-213524.767| -* rootDir=root_dir
+20241118-213524.769| -* mAddr6=ff02::4105:4105
+20241118-213524.772| -* mPort=4105
+20241118-213524.772| -* mTTL=2
+20241118-213524.775| -* loopback=true
+20241118-213524.777| -* reuseAddr=false
+20241118-213524.779| -* soTimeout=10
+20241118-213524.781| -* sleepTime=1000
+20241118-213524.782| -* maximumMessageSize=1400
+20241118-213524.785| -* maximumAdvertisementPeriod=1000
+20241118-213524.787| -* search=false
+20241118-213524.789| -* download=false
+20241118-213524.809| using interface enp3s0
+20241118-213524.811| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213524.812| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213524.813| Joined Multicast Group : null
+20241118-213524.829| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965724820:20241118-213524.820:advertisement:4105:search=false,download=false:
+20241118-213525.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965725820:20241118-213525.820:advertisement:4105:search=false,download=false:
+20241118-213526.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965726820:20241118-213526.820:advertisement:4105:search=false,download=false:
+20241118-213527.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965727820:20241118-213527.820:advertisement:4105:search=false,download=false:
+20241118-213528.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965728820:20241118-213528.820:advertisement:4105:search=false,download=false:
+20241118-213529.821| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965729821:20241118-213529.821:advertisement:4105:search=false,download=false:
+20241118-213530.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965730820:20241118-213530.820:advertisement:4105:search=false,download=false:
+20241118-213531.820| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965731820:20241118-213531.820:advertisement:4105:search=false,download=false:
+20241118-213613.150| -* logFile=logs/demo-cs4105.log
+20241118-213613.150| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-213613.152| -* rootDir=root_dir
+20241118-213613.153| -* mAddr6=ff02::4105:4105
+20241118-213613.156| -* mPort=4105
+20241118-213613.157| -* mTTL=2
+20241118-213613.159| -* loopback=true
+20241118-213613.160| -* reuseAddr=false
+20241118-213613.162| -* soTimeout=10
+20241118-213613.164| -* sleepTime=1000
+20241118-213613.166| -* maximumMessageSize=1400
+20241118-213613.167| -* maximumAdvertisementPeriod=1000
+20241118-213613.170| -* search=false
+20241118-213613.171| -* download=false
+20241118-213613.194| using interface enp3s0
+20241118-213613.196| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213613.196| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213613.197| Joined Multicast Group : null
+20241118-213613.213| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965773205:20241118-213613.205:advertisement:4105:search=false,download=false:
+20241118-213614.204| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965774204:20241118-213614.204:advertisement:4105:search=false,download=false:
+20241118-213614.969| -* logFile=logs/demo-cs4105.log
+20241118-213614.970| -* id=jz75@pc7-005-l.cs.st-andrews.ac.uk
+20241118-213614.970| -* rootDir=root_dir
+20241118-213614.971| -* mAddr6=ff02::4105:4105
+20241118-213614.972| -* mPort=4105
+20241118-213614.973| -* mTTL=2
+20241118-213614.973| -* loopback=true
+20241118-213614.973| -* reuseAddr=false
+20241118-213614.973| -* soTimeout=10
+20241118-213614.973| -* sleepTime=1000
+20241118-213614.974| -* maximumMessageSize=1400
+20241118-213614.974| -* maximumAdvertisementPeriod=1000
+20241118-213614.974| -* search=false
+20241118-213614.974| -* download=false
+20241118-213614.998| using interface enp3s0
+20241118-213615.000| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213615.000| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213615.001| Joined Multicast Group : null
+20241118-213615.017| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965775008:20241118-213615.008:advertisement:4105:search=false,download=false:
+20241118-213615.206| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965775204:20241118-213615.204:advertisement:4105:search=false,download=false:
+20241118-213616.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965776008:20241118-213616.008:advertisement:4105:search=false,download=false:
+20241118-213616.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965776204:20241118-213616.204:advertisement:4105:search=false,download=false:
+20241118-213617.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965777008:20241118-213617.008:advertisement:4105:search=false,download=false:
+20241118-213617.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965777204:20241118-213617.204:advertisement:4105:search=false,download=false:
+20241118-213618.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965778008:20241118-213618.008:advertisement:4105:search=false,download=false:
+20241118-213618.207| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965778206:20241118-213618.206:advertisement:4105:search=false,download=false:
+20241118-213619.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965779008:20241118-213619.008:advertisement:4105:search=false,download=false:
+20241118-213619.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965779204:20241118-213619.204:advertisement:4105:search=false,download=false:
+20241118-213620.011| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965780011:20241118-213620.010:advertisement:4105:search=false,download=false:
+20241118-213620.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965780204:20241118-213620.204:advertisement:4105:search=false,download=false:
+20241118-213621.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965781008:20241118-213621.008:advertisement:4105:search=false,download=false:
+20241118-213621.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965781204:20241118-213621.204:advertisement:4105:search=false,download=false:
+20241118-213622.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965782008:20241118-213622.008:advertisement:4105:search=false,download=false:
+20241118-213622.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965782204:20241118-213622.204:advertisement:4105:search=false,download=false:
+20241118-213623.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965783008:20241118-213623.008:advertisement:4105:search=false,download=false:
+20241118-213623.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965783204:20241118-213623.204:advertisement:4105:search=false,download=false:
+20241118-213624.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965784008:20241118-213624.008:advertisement:4105:search=false,download=false:
+20241118-213624.207| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965784206:20241118-213624.206:advertisement:4105:search=false,download=false:
+20241118-213625.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965785008:20241118-213625.008:advertisement:4105:search=false,download=false:
+20241118-213625.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965785204:20241118-213625.204:advertisement:4105:search=false,download=false:
+20241118-213626.010| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965786010:20241118-213626.010:advertisement:4105:search=false,download=false:
+20241118-213626.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965786204:20241118-213626.204:advertisement:4105:search=false,download=false:
+20241118-213627.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965787008:20241118-213627.008:advertisement:4105:search=false,download=false:
+20241118-213627.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965787204:20241118-213627.204:advertisement:4105:search=false,download=false:
+20241118-213627.321| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965787314:20241118-213627.314:search-request:text2:
+20241118-213627.328| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965787328:20241118-213627.328:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965787314:root_dir/dir2/text2-1.txt:
+20241118-213627.329| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965787329:20241118-213627.329:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965787314:root_dir/dir2/text2-2.txt:
+20241118-213628.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965788008:20241118-213628.008:advertisement:4105:search=false,download=false:
+20241118-213628.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965788204:20241118-213628.204:advertisement:4105:search=false,download=false:
+20241118-213629.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965789008:20241118-213629.008:advertisement:4105:search=false,download=false:
+20241118-213629.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965789204:20241118-213629.204:advertisement:4105:search=false,download=false:
+20241118-213630.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965790008:20241118-213630.008:advertisement:4105:search=false,download=false:
+20241118-213630.206| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965790206:20241118-213630.206:advertisement:4105:search=false,download=false:
+20241118-213631.008| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965791008:20241118-213631.008:advertisement:4105:search=false,download=false:
+20241118-213631.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965791204:20241118-213631.204:advertisement:4105:search=false,download=false:
+20241118-213632.010| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965792010:20241118-213632.010:advertisement:4105:search=false,download=false:
+20241118-213632.205| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965792204:20241118-213632.204:advertisement:4105:search=false,download=false:
+20241118-213759.194| -* logFile=logs/demo-cs4105.log
+20241118-213759.195| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-213759.196| -* rootDir=root_dir
+20241118-213759.197| -* mAddr6=ff02::4105:4105
+20241118-213759.201| -* mPort=4105
+20241118-213759.201| -* mTTL=2
+20241118-213759.204| -* loopback=true
+20241118-213759.206| -* reuseAddr=false
+20241118-213759.209| -* soTimeout=10
+20241118-213759.210| -* sleepTime=1000
+20241118-213759.213| -* maximumMessageSize=1400
+20241118-213759.214| -* maximumAdvertisementPeriod=1000
+20241118-213759.216| -* search=false
+20241118-213759.218| -* download=false
+20241118-213759.239| using interface enp3s0
+20241118-213759.242| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213759.242| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213759.243| Joined Multicast Group : null
+20241118-213759.260| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965879251:20241118-213759.251:advertisement:4105:search=false,download=false:
+20241118-213800.250| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965880250:20241118-213800.250:advertisement:4105:search=false,download=false:
+20241118-213800.944| -* logFile=logs/demo-cs4105.log
+20241118-213800.945| -* id=jz75@pc7-005-l.cs.st-andrews.ac.uk
+20241118-213800.945| -* rootDir=root_dir
+20241118-213800.945| -* mAddr6=ff02::4105:4105
+20241118-213800.947| -* mPort=4105
+20241118-213800.947| -* mTTL=2
+20241118-213800.947| -* loopback=true
+20241118-213800.947| -* reuseAddr=false
+20241118-213800.948| -* soTimeout=10
+20241118-213800.948| -* sleepTime=1000
+20241118-213800.948| -* maximumMessageSize=1400
+20241118-213800.948| -* maximumAdvertisementPeriod=1000
+20241118-213800.948| -* search=false
+20241118-213800.949| -* download=false
+20241118-213800.988| using interface enp3s0
+20241118-213800.992| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213800.993| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213800.993| Joined Multicast Group : null
+20241118-213801.012| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965881002:20241118-213801.002:advertisement:4105:search=false,download=false:
+20241118-213801.252| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965881250:20241118-213801.250:advertisement:4105:search=false,download=false:
+20241118-213802.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965882002:20241118-213802.002:advertisement:4105:search=false,download=false:
+20241118-213802.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965882250:20241118-213802.250:advertisement:4105:search=false,download=false:
+20241118-213803.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965883002:20241118-213803.002:advertisement:4105:search=false,download=false:
+20241118-213803.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965883250:20241118-213803.250:advertisement:4105:search=false,download=false:
+20241118-213804.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965884002:20241118-213804.002:advertisement:4105:search=false,download=false:
+20241118-213804.253| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965884252:20241118-213804.252:advertisement:4105:search=false,download=false:
+20241118-213805.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965885002:20241118-213805.002:advertisement:4105:search=false,download=false:
+20241118-213805.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965885250:20241118-213805.250:advertisement:4105:search=false,download=false:
+20241118-213806.005| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965886005:20241118-213806.005:advertisement:4105:search=false,download=false:
+20241118-213806.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965886250:20241118-213806.250:advertisement:4105:search=false,download=false:
+20241118-213807.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965887002:20241118-213807.002:advertisement:4105:search=false,download=false:
+20241118-213807.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965887250:20241118-213807.250:advertisement:4105:search=false,download=false:
+20241118-213808.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965888002:20241118-213808.002:advertisement:4105:search=false,download=false:
+20241118-213808.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965888250:20241118-213808.250:advertisement:4105:search=false,download=false:
+20241118-213809.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965889002:20241118-213809.002:advertisement:4105:search=false,download=false:
+20241118-213809.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965889250:20241118-213809.250:advertisement:4105:search=false,download=false:
+20241118-213810.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965890002:20241118-213810.002:advertisement:4105:search=false,download=false:
+20241118-213810.252| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965890251:20241118-213810.251:advertisement:4105:search=false,download=false:
+20241118-213811.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965891002:20241118-213811.002:advertisement:4105:search=false,download=false:
+20241118-213811.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965891250:20241118-213811.250:advertisement:4105:search=false,download=false:
+20241118-213812.005| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965892005:20241118-213812.004:advertisement:4105:search=false,download=false:
+20241118-213812.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965892250:20241118-213812.250:advertisement:4105:search=false,download=false:
+20241118-213813.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965893002:20241118-213813.002:advertisement:4105:search=false,download=false:
+20241118-213813.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965893250:20241118-213813.250:advertisement:4105:search=false,download=false:
+20241118-213814.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965894002:20241118-213814.002:advertisement:4105:search=false,download=false:
+20241118-213814.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965894250:20241118-213814.250:advertisement:4105:search=false,download=false:
+20241118-213815.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965895002:20241118-213815.002:advertisement:4105:search=false,download=false:
+20241118-213815.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965895250:20241118-213815.250:advertisement:4105:search=false,download=false:
+20241118-213816.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965896002:20241118-213816.002:advertisement:4105:search=false,download=false:
+20241118-213816.252| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965896252:20241118-213816.252:advertisement:4105:search=false,download=false:
+20241118-213817.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965897002:20241118-213817.002:advertisement:4105:search=false,download=false:
+20241118-213817.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965897250:20241118-213817.250:advertisement:4105:search=false,download=false:
+20241118-213818.005| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965898005:20241118-213818.005:advertisement:4105:search=false,download=false:
+20241118-213818.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965898250:20241118-213818.250:advertisement:4105:search=false,download=false:
+20241118-213819.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965899002:20241118-213819.002:advertisement:4105:search=false,download=false:
+20241118-213819.194| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965899186:20241118-213819.186:search-request:text1:
+20241118-213819.201| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965899200:20241118-213819.200:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965899186:root_dir/dir1/text1-1.txt:
+20241118-213819.201| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965899201:20241118-213819.201:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965899186:root_dir/dir1/text1-2.txt:
+20241118-213819.201| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965899201:20241118-213819.201:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965899186:root_dir/dir1/text1-3.txt:
+20241118-213819.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965899250:20241118-213819.250:advertisement:4105:search=false,download=false:
+20241118-213820.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965900002:20241118-213820.002:advertisement:4105:search=false,download=false:
+20241118-213820.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965900250:20241118-213820.250:advertisement:4105:search=false,download=false:
+20241118-213821.003| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965901002:20241118-213821.002:advertisement:4105:search=false,download=false:
+20241118-213821.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965901250:20241118-213821.250:advertisement:4105:search=false,download=false:
+20241118-213822.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965902002:20241118-213822.002:advertisement:4105:search=false,download=false:
+20241118-213822.252| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965902252:20241118-213822.252:advertisement:4105:search=false,download=false:
+20241118-213823.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965903002:20241118-213823.002:advertisement:4105:search=false,download=false:
+20241118-213823.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965903250:20241118-213823.250:advertisement:4105:search=false,download=false:
+20241118-213824.005| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965904005:20241118-213824.005:advertisement:4105:search=false,download=false:
+20241118-213824.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965904250:20241118-213824.250:advertisement:4105:search=false,download=false:
+20241118-213825.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965905002:20241118-213825.002:advertisement:4105:search=false,download=false:
+20241118-213825.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965905250:20241118-213825.250:advertisement:4105:search=false,download=false:
+20241118-213826.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965906002:20241118-213826.002:advertisement:4105:search=false,download=false:
+20241118-213826.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965906250:20241118-213826.250:advertisement:4105:search=false,download=false:
+20241118-213827.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965907002:20241118-213827.002:advertisement:4105:search=false,download=false:
+20241118-213827.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965907250:20241118-213827.250:advertisement:4105:search=false,download=false:
+20241118-213828.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965908002:20241118-213828.002:advertisement:4105:search=false,download=false:
+20241118-213828.253| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965908252:20241118-213828.252:advertisement:4105:search=false,download=false:
+20241118-213829.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965909002:20241118-213829.002:advertisement:4105:search=false,download=false:
+20241118-213829.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965909250:20241118-213829.250:advertisement:4105:search=false,download=false:
+20241118-213830.005| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965910004:20241118-213830.004:advertisement:4105:search=false,download=false:
+20241118-213830.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965910250:20241118-213830.250:advertisement:4105:search=false,download=false:
+20241118-213831.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965911002:20241118-213831.002:advertisement:4105:search=false,download=false:
+20241118-213831.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965911250:20241118-213831.250:advertisement:4105:search=false,download=false:
+20241118-213832.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965912002:20241118-213832.002:advertisement:4105:search=false,download=false:
+20241118-213832.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965912250:20241118-213832.250:advertisement:4105:search=false,download=false:
+20241118-213833.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965913002:20241118-213833.002:advertisement:4105:search=false,download=false:
+20241118-213833.251| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965913250:20241118-213833.250:advertisement:4105:search=false,download=false:
+20241118-213834.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965914002:20241118-213834.002:advertisement:4105:search=false,download=false:
+20241118-213834.253| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965914252:20241118-213834.252:advertisement:4105:search=false,download=false:
+20241118-213835.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965915002:20241118-213835.002:advertisement:4105:search=false,download=false:
+20241118-213836.006| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965916005:20241118-213836.005:advertisement:4105:search=false,download=false:
+20241118-213837.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965917002:20241118-213837.002:advertisement:4105:search=false,download=false:
+20241118-213838.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965918002:20241118-213838.002:advertisement:4105:search=false,download=false:
+20241118-213839.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965919002:20241118-213839.002:advertisement:4105:search=false,download=false:
+20241118-213840.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965920002:20241118-213840.002:advertisement:4105:search=false,download=false:
+20241118-213841.002| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965921002:20241118-213841.002:advertisement:4105:search=false,download=false:
+20241118-213924.681| -* logFile=logs/demo-cs4105.log
+20241118-213924.682| -* id=jz75@pc7-033-l.cs.st-andrews.ac.uk
+20241118-213924.682| -* rootDir=root_dir
+20241118-213924.682| -* mAddr6=ff02::4105:4105
+20241118-213924.684| -* mPort=4105
+20241118-213924.684| -* mTTL=2
+20241118-213924.686| -* loopback=true
+20241118-213924.688| -* reuseAddr=false
+20241118-213924.690| -* soTimeout=10
+20241118-213924.692| -* sleepTime=1000
+20241118-213924.694| -* maximumMessageSize=1400
+20241118-213924.697| -* maximumAdvertisementPeriod=1000
+20241118-213924.700| -* search=false
+20241118-213924.702| -* download=false
+20241118-213924.722| using interface enp3s0
+20241118-213924.724| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213924.725| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213924.726| Joined Multicast Group : null
+20241118-213924.742| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965964733:20241118-213924.733:advertisement:4105:search=false,download=false:
+20241118-213925.733| tx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965965733:20241118-213925.733:advertisement:4105:search=false,download=false:
+20241118-213926.320| -* logFile=logs/demo-cs4105.log
+20241118-213926.321| -* id=jz75@pc7-005-l.cs.st-andrews.ac.uk
+20241118-213926.321| -* rootDir=root_dir
+20241118-213926.321| -* mAddr6=ff02::4105:4105
+20241118-213926.323| -* mPort=4105
+20241118-213926.323| -* mTTL=2
+20241118-213926.323| -* loopback=true
+20241118-213926.323| -* reuseAddr=false
+20241118-213926.324| -* soTimeout=10
+20241118-213926.324| -* sleepTime=1000
+20241118-213926.324| -* maximumMessageSize=1400
+20241118-213926.324| -* maximumAdvertisementPeriod=1000
+20241118-213926.325| -* search=false
+20241118-213926.325| -* download=false
+20241118-213926.348| using interface enp3s0
+20241118-213926.350| Multicast Endpoint Created : ff02::4105:4105:4105
+20241118-213926.350| joined IPv6 multicast group /[ff02:0:0:0:0:0:4105:4105]:4105
+20241118-213926.350| Joined Multicast Group : null
+20241118-213926.366| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965966357:20241118-213926.357:advertisement:4105:search=false,download=false:
+20241118-213926.735| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965966733:20241118-213926.733:advertisement:4105:search=false,download=false:
+20241118-213927.358| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965967358:20241118-213927.358:advertisement:4105:search=false,download=false:
+20241118-213927.734| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965967733:20241118-213927.733:advertisement:4105:search=false,download=false:
+20241118-213928.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965968357:20241118-213928.357:advertisement:4105:search=false,download=false:
+20241118-213928.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965968733:20241118-213928.733:advertisement:4105:search=false,download=false:
+20241118-213929.358| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965969357:20241118-213929.357:advertisement:4105:search=false,download=false:
+20241118-213929.735| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965969735:20241118-213929.735:advertisement:4105:search=false,download=false:
+20241118-213930.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965970357:20241118-213930.357:advertisement:4105:search=false,download=false:
+20241118-213930.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965970733:20241118-213930.733:advertisement:4105:search=false,download=false:
+20241118-213931.359| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965971359:20241118-213931.359:advertisement:4105:search=false,download=false:
+20241118-213931.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965971733:20241118-213931.733:advertisement:4105:search=false,download=false:
+20241118-213932.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965972357:20241118-213932.357:advertisement:4105:search=false,download=false:
+20241118-213932.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965972733:20241118-213932.733:advertisement:4105:search=false,download=false:
+20241118-213933.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965973357:20241118-213933.357:advertisement:4105:search=false,download=false:
+20241118-213933.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965973733:20241118-213933.733:advertisement:4105:search=false,download=false:
+20241118-213934.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965974357:20241118-213934.357:advertisement:4105:search=false,download=false:
+20241118-213934.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965974733:20241118-213934.733:advertisement:4105:search=false,download=false:
+20241118-213935.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965975357:20241118-213935.357:advertisement:4105:search=false,download=false:
+20241118-213935.734| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965975734:20241118-213935.734:advertisement:4105:search=false,download=false:
+20241118-213936.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965976357:20241118-213936.357:advertisement:4105:search=false,download=false:
+20241118-213936.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965976733:20241118-213936.733:advertisement:4105:search=false,download=false:
+20241118-213937.117| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965977110:20241118-213937.110:search-request:text1:
+20241118-213937.129| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965977129:20241118-213937.129:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965977110:root_dir/dir1/text1-1.txt:
+20241118-213937.129| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965977129:20241118-213937.129:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965977110:root_dir/dir1/text1-2.txt:
+20241118-213937.130| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965977130:20241118-213937.130:search-result:jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965977110:root_dir/dir1/text1-3.txt:
+20241118-213937.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965977357:20241118-213937.357:advertisement:4105:search=false,download=false:
+20241118-213937.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965977733:20241118-213937.733:advertisement:4105:search=false,download=false:
+20241118-213938.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965978357:20241118-213938.357:advertisement:4105:search=false,download=false:
+20241118-213938.734| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965978733:20241118-213938.733:advertisement:4105:search=false,download=false:
+20241118-213939.358| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965979358:20241118-213939.358:advertisement:4105:search=false,download=false:
+20241118-213939.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965979733:20241118-213939.733:advertisement:4105:search=false,download=false:
+20241118-213940.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965980357:20241118-213940.357:advertisement:4105:search=false,download=false:
+20241118-213940.733| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965980733:20241118-213940.733:advertisement:4105:search=false,download=false:
+20241118-213941.357| tx-> :jz75@pc7-005-l.cs.st-andrews.ac.uk:1731965981357:20241118-213941.357:advertisement:4105:search=false,download=false:
+20241118-213941.734| rx-> :jz75@pc7-033-l.cs.st-andrews.ac.uk:1731965981734:20241118-213941.734:advertisement:4105:search=false,download=false:

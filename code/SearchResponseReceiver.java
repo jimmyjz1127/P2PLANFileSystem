@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class SearchResponseReceiver implements Runnable {
+    public static final String RESET = "\033[0m";
+    public static final String RED = "\033[31m";
+    public static final String GREEN = "\033[32m";
+    public static final String BLUE = "\033[34m";
+
     private MulticastHandler multicastHandler;
     private Configuration configuration;
     private final BlockingQueue<Message> searchResponses;
@@ -42,9 +47,9 @@ public class SearchResponseReceiver implements Runnable {
     public void processSearchResults(Message responseMessage) {
         if (responseMessage.getType().equals("search-result")) {
             String result = ((SearchResultMessage) responseMessage).getSearchResultString();
-            System.out.println("Search Result : " + result + " @ " + responseMessage.getIdentifier());
+            System.out.println(GREEN + "[Search Result] : " + RESET + BLUE + result + RESET + " @ " + BLUE + responseMessage.getIdentifier() + RESET);
         } else if (responseMessage.getType().equals("search-error")) {
-            System.out.println("Search Error : No Result @ " + responseMessage.getIdentifier());
+            System.out.println(RED + "[Search Error] : No Result @ " + RESET + BLUE + responseMessage.getIdentifier() + RESET);
         }
     }
 

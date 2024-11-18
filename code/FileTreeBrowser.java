@@ -29,6 +29,11 @@ public final class FileTreeBrowser {
   final static String search   = new String(":search");
   final static String download = new String(":download");
 
+  public static final String RESET = "\033[0m";
+  public static final String RED = "\033[31m";
+  public static final String GREEN = "\033[32m";
+  public static final String BLUE = "\033[34m";
+
   final static String propertiesFile = "filetreebrowser.properties";
   static Configuration configuration;
   static String rootPath = "";
@@ -230,7 +235,7 @@ public final class FileTreeBrowser {
    * 
    */
   static void search(MulticastHandler multicastHandler) { 
-    System.out.print("\n Please enter your search string : ");
+    System.out.print("\nPlease enter your search string : ");
     Scanner scanner = new Scanner(System.in);
 
     String searchString = scanner.nextLine();
@@ -240,7 +245,7 @@ public final class FileTreeBrowser {
       return;
     }
 
-    System.out.println("Searching multicast group for : " + searchString);
+    System.out.println("Searching multicast group for : " + searchString + "...\n");
 
     multicastHandler.txSearchRequest(searchString);
 

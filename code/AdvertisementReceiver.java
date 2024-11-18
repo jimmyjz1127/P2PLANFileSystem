@@ -21,6 +21,11 @@ import java.net.NetworkInterface;
  * @since November 2024
  */
 public class AdvertisementReceiver implements Runnable {
+    public static final String RESET = "\033[0m";
+    public static final String RED = "\033[31m";
+    public static final String GREEN = "\033[32m";
+    public static final String BLUE = "\033[34m";
+
     private MulticastHandler multicastHandler;
     private Configuration configuration;
     private String username;
@@ -87,9 +92,9 @@ public class AdvertisementReceiver implements Runnable {
 
         for (AdvertisementMessage message : advertisements.values()) {
             System.out.println("[" + count++ + "]");
-            System.out.println("     Identifier : " + message.getIdentifier());
-            System.out.println("     Port : " + message.getServerPort());
-            System.out.println("     Services : " + message.getServicesString());
+            System.out.println("     Identifier : " + BLUE + message.getIdentifier() + RESET);
+            System.out.println("     Port       : " + BLUE + message.getServerPort() + RESET);
+            System.out.println("     Services   : " + BLUE + message.getServicesString() + RESET);
         }
     }
 

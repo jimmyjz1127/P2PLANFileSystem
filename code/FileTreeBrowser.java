@@ -6,7 +6,6 @@
  * 18 Sep 2024, checked with java 21 on CS Lab Linux machines. 
  *
  */
-package code;
 
 
 import java.io.File;
@@ -61,6 +60,7 @@ public final class FileTreeBrowser {
   public static void main(String[] args) {
 
     configuration = new Configuration(propertiesFile);
+    System.out.println(configuration.maximumAdvertisementPeriod);
     rootPath = getPathName(new File(configuration.rootDir));
 
     InputStream keyboard = System.in;

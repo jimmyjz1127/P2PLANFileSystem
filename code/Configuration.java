@@ -11,8 +11,6 @@
 /*
   This is an object that gets passed around, containing useful information.
 */
-package code;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;

@@ -1,9 +1,3 @@
-package code.message;
-
-import code.Configuration;
-import code.LogFileWriter;
-import code.ByteReader;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;

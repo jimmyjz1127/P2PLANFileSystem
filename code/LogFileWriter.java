@@ -1,5 +1,3 @@
-package code;
-
 /**
  * LogFileWriter - simple logging to local file.
  
@@ -29,13 +27,14 @@ public class LogFileWriter {
     sdf = new SimpleDateFormat(new String("yyyyMMdd-HHmmss.SSS"));
 
     try {
-      if (lf.exists()) fw = new FileWriter(fileName, true);
+      if (lf.exists()) 
+          fw = new FileWriter(fileName, true);
       else {
           lf.createNewFile();
           fw = new FileWriter(fileName, true);
       }
     }
-    catch (Exception e) { System.out.println(e);}
+    catch (Exception e) { System.err.println("LogFileWriter.LogFileWriter() : " + e);}
   }
 
   public void writeLog(String logRequest) { writeLog(logRequest, false); }
@@ -48,7 +47,7 @@ public class LogFileWriter {
       fw.flush();
       if (stdout) { System.out.print(logEntry); }
     }
-    catch (Exception e) { System.out.println(e); }
+    catch (Exception e) { System.err.println("LogFileWriter.writeLog() : " + e.getMessage()); }
   }
 
 }

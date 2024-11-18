@@ -1,7 +1,3 @@
-package code;
-
-import code.message.*;
-
 import java.io.File;
 import java.net.*;
 import java.util.Arrays;
@@ -59,9 +55,7 @@ public class MulticastHandler implements Runnable {
             // Create advertisement sender and add to threadpool
             advertisementSender = new AdvertisementSender(this);
             // Schedule the advertisement sender to send out ad at an interval
-            // scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
-            scheduler.submit(advertisementSender);
-
+            scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
             // Create search request receiever and add to threadpool
             searchRequestReceiver = new SearchRequestReceiver(this);

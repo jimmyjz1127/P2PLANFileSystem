@@ -1,7 +1,3 @@
-package code;
-
-import code.message.Message;
-import code.message.SearchResultMessage;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

@@ -17,33 +17,35 @@ import java.util.Date;
  * @since November 2024
  */
 public class DownloadResultMessage extends Message {
-    private String filepath;            // Path of requested file 
+    private String fileString;          // File string of requested file (filename|path|substring)
     private String responseIdentifier;  // Identifier of requester 
     private long   responseSerialNo;    // Serial Number of download-request 
     private int    fileTransferPort;    // TCP port to connect to machine containing file 
+    private int    numMatchingFiles;    // The number of files that match the fileString
 
 
     /**
      * Constructor for tx download-result message 
      * 
-     * @param filepath : the filepath specified by corresponding rx download-request
+     * @param fileString : file string (filename|path|substring) specified by corresponding rx download-request
      * @param responseIdentifier : the identifier of corresponding rx download-request 
      * @param responseSerialNo : the serial number of corresponding rx download-request message
      * @param fileTransferPort : port number on current machine for which remote machine can download file from 
      */
-    public DownloadResultMessage(String filepath, String responseIdentifier, long responseSerialNo, int fileTransferPort) {
+    public DownloadResultMessage(String fileString, String responseIdentifier, long responseSerialNo, int fileTransferPort, int numMatchingFiles) {
         super();
 
-        this.filepath = filepath;
+        this.fileString = fileString;
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
         this.fileTransferPort = fileTransferPort;
+        this.numMatchingFiles = numMatchingFiles;
     }
 
     /**
      * Constructor for rx download-result message 
      * 
-     * @param filepath : filepath from original tx download-request 
+     * @param fileString : fileString from original tx download-request 
      * @param responseIdentifier : should be identifier of current machine
      * @param responseSerialNo : serial number of original tx download-request 
      * @param fileTransferPort : the port on remote machine for current machine to download file from 
@@ -51,14 +53,15 @@ public class DownloadResultMessage extends Message {
      * @param identifier : identifier of remote machine from which we want to download from
      * @param serialNo : the serial number of incoming download-result
      */
-    public DownloadResultMessage(String filepath, String responseIdentifier, long responseSerialNo, int fileTransferPort,
-                                 String timestamp, String identifier, long serialNo) {
+    public DownloadResultMessage(String fileString, String responseIdentifier, long responseSerialNo, int fileTransferPort,
+                                 int numMatchingFiles, String timestamp, String identifier, long serialNo) {
         super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
         
-        this.filepath = filepath;
+        this.fileString = fileString;
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
         this.fileTransferPort = fileTransferPort;
+        this.numMatchingFiles = numMatchingFiles;
     }
 
     /**
@@ -72,8 +75,8 @@ public class DownloadResultMessage extends Message {
      * Getter for filepath
      * @return : the filepath as string 
      */
-    public String getFilepath() {
-        return filepath;
+    public String getFileString() {
+        return fileString;
     }
 
     /**
@@ -101,6 +104,13 @@ public class DownloadResultMessage extends Message {
         return fileTransferPort;
     }
 
+    /**
+     * Getter for numMatchingFiles;
+     */
+    public int getNumMatchingFiles() {
+        return numMatchingFiles;
+    }
+
 
     /**
      * To string to convert message into protocol string format
@@ -108,6 +118,6 @@ public class DownloadResultMessage extends Message {
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimeStamp();
-        String payload = ":download-result:" + responseIdentifier + ":" + filepath + ":" + fileTransferPort + ":";
+        String payload = ":download-result:" + responseIdentifier + ":" + fileString + ":" + fileTransferPort + ":";
     }
  }

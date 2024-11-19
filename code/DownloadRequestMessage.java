@@ -19,35 +19,35 @@ import java.util.Date;
  * @since November 2024
  */
 public class DownloadRequestMessage extends Message { 
-    private String filepath; // the path to file to download 
+    private String fileString; // the path to file to download 
     private String targetIdentifier;
 
     /**
      * Constructor for tx DownloadRequestMessage 
      * 
-     * @param filepath : the filepath of file located on remote machine to download to current machine
+     * @param fileString : the string of file located on remote machine to download to current machine
      * @param targetIdentifier : the identifier of the target machine to download from
      */
-    public DownloadRequestMessage(String filepath, String targetIdentifier) {
+    public DownloadRequestMessage(String fileString, String targetIdentifier) {
         super();
 
-        this.filepath = filepath;
+        this.fileString = fileString;
         this.targetIdentifier = targetIdentifier;
     }
 
     /**
      * Constructor for the rx DownloadRequestMessage
      * 
-     * @param filepath : the filepath of file on current machine which remote machine wants to download 
+     * @param fileString : the fileString of file on current machine which remote machine wants to download 
      * @param targetIdentifier : the identifier of current machine 
      * @param timestamp : timestamp of incoming search request message 
      * @param identifier : the identifier of remote machine that sent incoming download-request 
      * @param serialNo : the serial number of the download-request message.
      */
-    public DownloadRequestMessage(String filepath, String targetIdentifier, String timestamp, String identifier, long serialNo) {
+    public DownloadRequestMessage(String fileString, String targetIdentifier, String timestamp, String identifier, long serialNo) {
         super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
-        this.filepath = filepath;
+        this.fileString = fileString;
         this.targetIdentifier = targetIdentifier; // should be current machine's identfier
     }
 
@@ -63,8 +63,8 @@ public class DownloadRequestMessage extends Message {
      * Getter for filepath
      * @return : the filepath as string 
      */
-    public String getFilepath() {
-        return filepath;
+    public String getFileString() {
+        return fileString;
     }
 
     /**
@@ -83,7 +83,7 @@ public class DownloadRequestMessage extends Message {
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" getTimeStamp();
-        String payload = ":download-request:" + targetIdentifier + ":" + filepath + ":";
+        String payload = ":download-request:" + targetIdentifier + ":" + fileString + ":";
 
         return header + payload;
     }

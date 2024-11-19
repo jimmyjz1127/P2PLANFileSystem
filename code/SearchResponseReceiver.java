@@ -7,9 +7,18 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
+ * Runnable task for managing rx search-response messaages from other remote nodes
+ * in multicast group.
  * 
+ * Takes incoming response messages, queues them, then processes them (prints them out)
+ * 
+ * @author 190015412
+ * @since November 2024
  */
 public class SearchResponseReceiver implements Runnable {
+    /**
+     * ANSI escape codes for colored cmd output
+     */
     public static final String RESET = "\033[0m";
     public static final String RED = "\033[31m";
     public static final String GREEN = "\033[32m";
@@ -20,7 +29,7 @@ public class SearchResponseReceiver implements Runnable {
     private final BlockingQueue<Message> searchResponses;
 
     /**
-     * 
+     * Constructor for SearchResponseReceiver.
      */
     public SearchResponseReceiver(MulticastHandler multicastHandler) {
         this.multicastHandler = multicastHandler;
@@ -30,13 +39,13 @@ public class SearchResponseReceiver implements Runnable {
 
 
     /**
-     * 
+     * Print out search-resposnes messages while there are any in the queue
      */
     @Override 
     public void run() {
         while (!searchResponses.isEmpty()) {
             Message responseMessage = searchResponses.poll();
-            processSearchResults(responseMessage);
+            processSearchResponses(responseMessage);
         }
     }
 
@@ -44,12 +53,12 @@ public class SearchResponseReceiver implements Runnable {
      * Takes a search-response message and prints out its details according to type or response.
      * @param responseMessage : a search-response message either of type SearchResultMessage or SearchErrorMessage
      */
-    public void processSearchResults(Message responseMessage) {
+    public void processSearchResponses(Message responseMessage) {
         if (responseMessage.getType().equals("search-result")) {
             String result = ((SearchResultMessage) responseMessage).getSearchResultString();
             System.out.println(GREEN + "[Search Result] : " + RESET + BLUE + result + RESET + " @ " + BLUE + responseMessage.getIdentifier() + RESET);
         } else if (responseMessage.getType().equals("search-error")) {
-            System.out.println(RED + "[Search Error] : No Result @ " + RESET + BLUE + responseMessage.getIdentifier() + RESET);
+            System.out.println(RED + "[Search Error] :" +  RESET + " No Result @ " + BLUE + responseMessage.getIdentifier() + RESET);
         }
     }
 

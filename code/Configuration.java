@@ -76,6 +76,9 @@ public class Configuration
   public InetAddress mGroup;
   public String hostInfo;
 
+  public int socketMaxTTL;
+  public String downloadDir;
+
   public Configuration(String file) 
   {
     if (file != null) { propertiesFile = file; }
@@ -208,6 +211,15 @@ public class Configuration
           }
           System.out.println(propertiesFile + " download: " + download + " -> " + s);
           download = Boolean.parseBoolean(s);
+        }
+        if ((s = properties.getProperty("socketMaxTTL")) != null) {
+            System.out.println(propertiesFile + " socketMaxTTL: " + socketMaxTTL + " -> " + s);
+            socketMaxTTL = Integer.parseInt(s);
+        }
+
+        if ((s = properties.getProperty("downloadDir")) != null) {
+            System.out.println(propertiesFile + " downloadDir: " + downloadDir + " -> " + s);
+            downloadDir = Integer.parseInt(s);
         }
 
         p.close();

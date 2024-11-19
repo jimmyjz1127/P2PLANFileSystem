@@ -41,10 +41,7 @@ public class SearchRequestReceiver implements Runnable {
         try {
             processSearchRequests();
         } catch (InterruptedException e) {
-            /**
-             * Handle exception
-             */
-            System.out.println();
+            System.out.println("SearchRequestReceiver.run() : InterruptedException -> " + e.getMessage());
         }
         
     }
@@ -60,7 +57,7 @@ public class SearchRequestReceiver implements Runnable {
 
         // Shouldn't ever be null, but check just in case
         if (msg != null) {
-            // the query (filename, filepath, substring)
+            // the query [filename | filepath | substring]
             String searchString = msg.getSearchString();
 
             // Other attributes 

@@ -156,10 +156,16 @@
 
 
 #### ####
-## R3: Download -- TBD.
-# If you attempt this, please include a description of your design and
-# your definitions for the items below in your report.
-# You will need to use TCP/IPv6 for the file download.
+## R3: Download
+
+# The general protocol is as follows 
+# 1. Requester sends <download-request> to a specific target node, specifying a file-string
+#    A file-string can match multiple files (is sub-string matched)
+# 2. The responder (containing requested file) determines all files that match file-string and 
+#    opens an ephemeral unicast socket that the requester can connect to in order to perform file transfer.
+# 3. The responder then sends back a <download-response> for each matching file, containing the 
+#    addressing information of the ephemeral unicast socket (identifer and port) back to the requester
+# 4. For each <download-result> that the client gets back from the server, it sends back
 
 <download-message> := <download-request> / <download-response>
 
@@ -170,15 +176,17 @@
   # we want to download a file from.
 
 
-<download-request> := "download-request" : <target-identifier> : file-path
+<download-request> := "download-request" : <target-identifier> : file-string
   # A download request specifies a target host in the multicast group from which,
-  # to download a specified file string. Unlike file-string from before, the file-path 
-  # must be the specify the name and location of the file on the remote machine (and 
-  # therefore must be unique)
+  # to download a specified file string. The file string can match multiple resources on target host's file system.
   #
-  # An example download request would be : 
+  # An example download request specifying a unique file would be : 
   #
   #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:root_dir/dir1/text1-1.txt:
+  #
+  # An example download request specifying a non-unique file-string would be : 
+  #   
+  #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:text1:
 
 <response-identifier> := <identifier> : <serial-number>
   # The identifier and port should be the same as was used in corresponding download-request 
@@ -189,14 +197,25 @@
 <response-serial-number> := *DIGIT
   # The serial number used in corresponding download-request message
 
-<download-result> := "download-result" : <response-identifier> : file-path : <file-transfer-port> 
+<download-result> := "download-result" : <response-identifier> : file-string : <file-transfer-port> : num-files :
   # Specifices the identifier of machine which originally send out download request, along 
-  # with a port number of the current machine for which the remote machine can connect to 
-  # to perform TCP file transfer 
+  # with a the number of files that match the file-string provided in the original download-request, 
+  # the  port number of the current machine for which the remote machine can connect to in order to perform TCP file transfer 
+  #
+  # Note that one or more download-result messages may be sent back to requester if the file-string
+  # in the original request has multiple matches (similar to search). If this is the case, the client 
+  # (requester) will have to send separate <unicast-download-request>
   # 
   # An example download-result to the download-request above would be : 
   # 
-  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:
+  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:1:
+  #
+  # An example download-result where multiple files (3) match the file-string would be : 
+  #
+  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:text1:4105:3:
+  #
+
+
 
 <download-error> := "download-error" : <response-id>
   # Specifies the response-id of the machine that originally sent corresponding download-request.

@@ -78,10 +78,26 @@ public class AdvertisementReceiver implements Runnable {
      */
     public void addAdvertisement(AdvertisementMessage advertisementMessage) {
         if (!identifier.equals(advertisementMessage.getIdentifier())) {
-            String id = advertisementMessage.getIdentifier() + ":" + advertisementMessage.getServerPort();
+            // String id = advertisementMessage.getIdentifier() + ":" + advertisementMessage.getServerPort();
+            String id = advertisementMessage.getIdentifier();
             advertisements.put(id, advertisementMessage);
         }
-        
+    }
+
+    /**
+     * Returns boolean indicating whether the current node has received any advertisements
+     */
+    public boolean haveReceivedAdvertisements() {
+        return advertisements.size() > 0;
+    }
+
+    /**
+     * Returns received advertisement message for a corresponding to a given key (identifier)
+     * 
+     * @param key : an identifier (username@fqdn)
+     */
+    public AdvertisementMessage getAdvertisementMessage(String key) {
+        return advertisements.get(key);
     }
 
     /**

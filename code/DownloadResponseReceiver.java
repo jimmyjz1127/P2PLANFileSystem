@@ -59,14 +59,14 @@ public class DownloadResponseReceiver implements Runnable {
             String hostname         = downloadResultMessage.getHostname();
             int    serverPort       = downloadResultMessage.getFileTransferPort();
 
-            System.out.println(GREEN + "[Download Result]" + RESET + " " + numMatchingFiles + " file(s) matched @" + BLUE + identifier + RESET);
+            System.out.println(GREEN + "[DOWNLOAD RESULT]" + RESET + " " + numMatchingFiles + " file(s) matched @" + BLUE + identifier + RESET);
             System.out.println("Initiating file transfer...");
 
             FileClient fileClient = new FileClient(configuration, hostname, serverPort, numMatchingFiles);
             Thread t = new Thread(fileClient);
             t.start();
         } else {
-            System.out.println(RED + "[DOWNLOAD ERROR] : " + RESET + "No Results @ " + 
+            System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : No Results @ " + 
                                BLUE + responseMessage.getIdentifier() + RESET);
         }
     }

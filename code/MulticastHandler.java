@@ -19,6 +19,15 @@ import java.util.ArrayList;
  */
 
 public class MulticastHandler implements Runnable {
+    /**
+     * ANSI Escape codes for colored CMD output
+     */
+    public static final String RESET = "\033[0m";
+    public static final String RED = "\033[31m";
+    public static final String GREEN = "\033[32m";
+    public static final String BLUE = "\033[34m";
+
+
     private MulticastEndpoint multicastEndpoint; 
     public Configuration configuration;
     private ScheduledExecutorService scheduler;
@@ -48,7 +57,7 @@ public class MulticastHandler implements Runnable {
             configuration.log.writeLog("Joined Multicast Group : " + this.configuration.mGroup);
 
             // Create scheduled threadpool
-            scheduler = Executors.newScheduledThreadPool(7);
+            scheduler = Executors.newScheduledThreadPool(6);
 
             // Create advertisement receiver an add to threadpool
             advertisementReceiver = new AdvertisementReceiver(this);
@@ -149,7 +158,6 @@ public class MulticastHandler implements Runnable {
             if (message != null) {
                 configuration.log.writeLog("rx-> " + message.toString());
             }
-
             return message;
         }
 
@@ -203,10 +211,15 @@ public class MulticastHandler implements Runnable {
             case "search-request" :
                 String searchString = payload[0]; // the search string to query 
 
-                SearchRequestMessage searchRequestMessage = 
+                // only if current machine has search capability will it respond to search-request
+                if (configuration.search) {
+                    SearchRequestMessage searchRequestMessage = 
                                         new SearchRequestMessage(searchString, timestamp, identifier, serialNo);
 
-                return searchRequestMessage;
+                    return searchRequestMessage;
+                }
+                return null;
+               
             case "search-result" :
                 // should be <current machine's identifier> : <response serialNo>
                 responseIdentifier = payload[0]; 
@@ -240,7 +253,8 @@ public class MulticastHandler implements Runnable {
             case "download-request" :
                 String targetIdentifier = payload[0];
 
-                if (targetIdentifier.equals(configuration.identifier)) {
+                // If download-request was intended for current machine and current machine does have download capability
+                if (targetIdentifier.equals(configuration.identifier) && configuration.download) {
                     String fileString = payload[1];
 
                     DownloadRequestMessage downloadRequestMessage = 
@@ -319,8 +333,15 @@ public class MulticastHandler implements Runnable {
      * In response to user using :download command
      */
     public void txDownloadRequest(String fileString, String targetIdentifier) {
-        DownloadRequestMessage downloadRequestMessage = new DownloadRequestMessage(fileString, targetIdentifier);
+        AdvertisementMessage targetAdvertisement = advertisementReceiver.getAdvertisementMessage(targetIdentifier);
 
+        // Check that download is possible for target machine
+        if (targetAdvertisement != null && !targetAdvertisement.isDownloadPossible()) {
+            System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : " + BLUE + targetIdentifier + RESET + " does not have download capability.");
+            return;
+        }
+
+        DownloadRequestMessage downloadRequestMessage = new DownloadRequestMessage(fileString, targetIdentifier);
         txMessage(downloadRequestMessage);
     }
 

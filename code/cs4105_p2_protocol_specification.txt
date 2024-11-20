@@ -215,8 +215,6 @@
   #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:text1:4105:3:
   #
 
-
-
 <download-error> := "download-error" : <response-id>
   # Specifies the response-id of the machine that originally sent corresponding download-request.
   # Similar to search-error, the serial number used in the header should match that of the 

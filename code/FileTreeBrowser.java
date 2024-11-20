@@ -63,7 +63,6 @@ public final class FileTreeBrowser {
    * @param args : no args required
    */
   public static void main(String[] args) {
-
     configuration = new Configuration(propertiesFile);
     System.out.println(configuration.maximumAdvertisementPeriod);
     rootPath = getPathName(new File(configuration.rootDir));
@@ -235,6 +234,11 @@ public final class FileTreeBrowser {
    * 
    */
   static void search(MulticastHandler multicastHandler) { 
+    if (!multicastHandler.advertisementReceiver.haveReceivedAdvertisements()) {
+      System.out.println(RED + "[SEARCH ERROR]" + RESET + " : No other nodes in multicast group right now.");
+    }
+
+
     System.out.print("\nPlease enter your search string : ");
     Scanner scanner = new Scanner(System.in);
 

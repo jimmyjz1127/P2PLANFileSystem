@@ -27,6 +27,8 @@ public class MulticastHandler implements Runnable {
     public AdvertisementSender advertisementSender;
     public SearchRequestReceiver searchRequestReceiver;
     public SearchResponseReceiver searchResponseReceiver;
+    public DownloadRequestReceiver downloadRequestReceiver;
+    public DownloadResponseReceiver downloadResponseReceiver;
 
     /**
      * Constructor for MulticastHandler.
@@ -63,15 +65,20 @@ public class MulticastHandler implements Runnable {
             // Schedule the receiver to process received search-requests at some interval 
             scheduler.scheduleAtFixedRate(searchRequestReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
-            // Create search response receiver task which process incoming search responses
+            // Create search response receiver task to process incoming search responses
             searchResponseReceiver = new SearchResponseReceiver(this);
             // submit task to threadpool to run constantly 
             scheduler.scheduleAtFixedRate(searchResponseReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
+            // Create download request receiver runnable task to process incoming download requests
+            downloadRequestReceiver = new DownloadRequestReceiver(this);
+            // submit task to threadpool to run at an interval
+            scheduler.scheduleAtFixedRate(downloadRequestReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
-            /**
-             * Todo : implement other receiver handlers
-             */
+            // Create download response receiver task to process incoming download responses
+            downloadResponseReceiver = new DownloadResponseReceiver(this);
+            // Submit task to threadpool to run 
+            scheduler.scheduleAtFixedRate(downloadResponseReceiver, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
             Thread t = new Thread(this);
             t.start();
@@ -106,6 +113,12 @@ public class MulticastHandler implements Runnable {
                         break;
                     case "search-error" :
                         searchResponseReceiver.addSearchResponse(message);
+                        break;
+                    case "download-request" :
+                        downloadRequestReceiver.addDownloadRequest((DownloadRequestMessage) message);
+                        break;
+                    case "download-result" :
+                        downloadResponseReceiver.addDownloadResponse(message);
                         break;
                 }
             }
@@ -225,10 +238,41 @@ public class MulticastHandler implements Runnable {
                 }
                 return null;
             case "download-request" :
+                String targetIdentifier = payload[0];
+
+                if (targetIdentifier.equals(configuration.identifier)) {
+                    String fileString = payload[1];
+
+                    DownloadRequestMessage downloadRequestMessage = 
+                                            new DownloadRequestMessage(fileString, targetIdentifier, timestamp, identifier, serialNo);
+                    return downloadRequestMessage;
+                }
                 return null;
             case "download-result" :
+                responseIdentifier = payload[0];
+
+                if (responseIdentifier.equals(configuration.identifier)) {
+                    responseSerialNo = Long.parseLong(payload[1]);
+                    String fileString = payload[2];
+                    int fileTransferPort = Integer.parseInt(payload[3]);
+                    int numMatchingFiles = Integer.parseInt(payload[4]);
+
+                    DownloadResultMessage downloadResultMessage = 
+                                        new DownloadResultMessage(fileString, responseIdentifier, responseSerialNo, fileTransferPort, numMatchingFiles, timestamp, identifier,serialNo);
+                    return downloadResultMessage;
+                }
                 return null;
-                
+            case "download-error" :
+                responseIdentifier = payload[0];
+
+                if (responseIdentifier.equals(configuration.identifier)) {
+                    responseSerialNo = Long.parseLong(payload[1]);
+
+                    DownloadErrorMessage downloadErrorMessage = 
+                                        new DownloadErrorMessage(responseIdentifier, responseSerialNo, timestamp, identifier, serialNo);
+                    return downloadErrorMessage;                    
+                }
+                return null;                
         } // end switch 
         return null;
     }
@@ -267,6 +311,17 @@ public class MulticastHandler implements Runnable {
         SearchRequestMessage searchRequestMessage = new SearchRequestMessage(searchString);
 
         txMessage(searchRequestMessage);
+    }
+
+
+    /**
+     * Method to send out tx download-request message 
+     * In response to user using :download command
+     */
+    public void txDownloadRequest(String fileString, String targetIdentifier) {
+        DownloadRequestMessage downloadRequestMessage = new DownloadRequestMessage(fileString, targetIdentifier);
+
+        txMessage(downloadRequestMessage);
     }
 
     /**

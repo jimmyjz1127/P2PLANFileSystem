@@ -134,7 +134,7 @@ public final class FileTreeBrowser {
 
       // download
       else
-      if (userCmd.equalsIgnoreCase(download)) { download(); }
+      if (userCmd.equalsIgnoreCase(download)) { download(multicastHandler); }
 
       else { // do something with pathname
         File f = ftb.searchList(userCmd);
@@ -245,7 +245,7 @@ public final class FileTreeBrowser {
       return;
     }
 
-    System.out.println("Searching multicast group for : " + searchString + "...\n");
+    System.out.println("Searching multicast group for : " + GREEN + searchString + RESET + "...\n");
 
     multicastHandler.txSearchRequest(searchString);
 
@@ -254,8 +254,27 @@ public final class FileTreeBrowser {
 
   }
 
-  static void download() { // TBC
-    System.out.println("\n * download: TBC");
+  static void download(MulticastHandler multicastHandler) { // TBC
+    System.out.print("\nPlease enter your file string : ");
+    Scanner scanner = new Scanner(System.in);
+
+    String fileString = scanner.nextLine();
+    
+    if (fileString == null || fileString.strip() == "") {
+      System.out.println("Search string cannot be empty.");
+      return;
+    }
+
+    System.out.print("Please enter target identifier (username@hostname) : ");
+
+    String targetIdentifier = scanner.nextLine();
+
+    System.out.println("Sending out download request for " + GREEN + fileString + RESET + " to " + BLUE + targetIdentifier + RESET + "...\n");
+
+    multicastHandler.txDownloadRequest(fileString, targetIdentifier);
+
+    try { Thread.sleep(1000); }
+    catch (InterruptedException e) { } // Thread.sleep() - do nothing
   }
 
   /**

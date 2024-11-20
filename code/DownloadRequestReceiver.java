@@ -31,7 +31,7 @@ public class DownloadRequestReceiver implements Runnable {
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
-    private final BlockingQueue<Message> downloadRequests;
+    private final BlockingQueue<DownloadRequestMessage> downloadRequests;
 
     /**
      * Constructor for DownloadRequestReceiver
@@ -82,7 +82,7 @@ public class DownloadRequestReceiver implements Runnable {
 
             // If no matching results were found 
             if (filesToDownload == null || filesToDownload.isEmpty()) {
-                DownloadErrorMessage response = new DownloadErrorMessage(identifier, serialNo);
+                Message response = new DownloadErrorMessage(identifier, serialNo);
                 multicastHandler.txMessage(response);
             } else {
                 FileServer fileServer = new FileServer(filesToDownload, configuration);

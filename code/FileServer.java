@@ -48,11 +48,7 @@ public class FileServer implements Runnable {
      */
     @Override
     public void run() {
-        try {
-            handleIncomingRequests();            
-        } catch (IOException e) {
-            System.err.println("FileServer.run() : IOException -> " + e.getMessage());
-        }
+        handleIncomingRequests();            
     }
 
     /**
@@ -67,29 +63,29 @@ public class FileServer implements Runnable {
      */
     public void handleIncomingRequests() {
         try {
+            Socket clientSocket = serverSocket.accept();
+            // Get client's IP address and port
+            String clientAddress = clientSocket.getInetAddress().getHostName();
+            int clientPort = clientSocket.getPort();
+
             // While there are still files to download 
             while (!filesToDownload.isEmpty()) {
-                Socket clientSocket = serverSocket.accept();
-                // Get client's IP address and port
-                String clientAddress = clientSocket.getInetAddress().getHostName();
-                int clientPort = clientSocket.getPort();
-
                 File file = filesToDownload.poll();
 
                 DataOutputStream fileOut = new DataOutputStream(clientSocket.getOutputStream());
 
-                int bytesRead = sendFile(fileOut, File);
+                int bytesRead = sendFile(fileOut, file);
 
-                configuration.log.writelog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
+                configuration.log.writeLog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
             }
+        } catch (SocketTimeoutException e) {
+            System.err.println("FileServer.handleIncomingRequests() : Socket Timed out");
+            return;
         } catch (IOException e) {
             System.err.println("FileServer.handleIncomingRequests() : IOException -> " + e.getMessage());
-        } catch (SocketTimeoutException e) {
-            System.err.printlng("FileServer.handleIncomingRequests() : Socket Timed out")
-            return;
         } finally {
             try {
-                serverSocket.close()
+                serverSocket.close();
             } catch (IOException e) {
                 System.err.println("FileServer.handleIncomingRequests() : Failed to close serverSocket -> " + e.getMessage());
             }
@@ -104,11 +100,9 @@ public class FileServer implements Runnable {
      * 
      * @return the amount of bytes sent
      */
-    public int sendFile(DataOutputSteam fileOut, File file) {
+    public int sendFile(DataOutputStream fileOut, File file) {
         int totalBytesSent = 0;
-        try {
-            FileInputStream fis = new FileInputStream(file);
-
+        try (FileInputStream fis = new FileInputStream(file)) {
             // write meta-data
             fileOut.writeUTF(file.getName());
             fileOut.writeLong(file.length());
@@ -120,9 +114,9 @@ public class FileServer implements Runnable {
                 fileOut.write(buffer,0, bytesRead);
                 totalBytesSent += bytesRead;
             }
-            dos.flush();
+            fileOut.flush();
         } catch (IOException e) {
-            System.err.println("FileServer.sendFile() : IOException -> " e.getMessage());
+            System.err.println("FileServer.sendFile() : IOException -> " + e.getMessage());
         }
         return totalBytesSent;
     }

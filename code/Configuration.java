@@ -219,7 +219,7 @@ public class Configuration
 
         if ((s = properties.getProperty("downloadDir")) != null) {
             System.out.println(propertiesFile + " downloadDir: " + downloadDir + " -> " + s);
-            downloadDir = Integer.parseInt(s);
+            downloadDir = new String(s);
         }
 
         p.close();

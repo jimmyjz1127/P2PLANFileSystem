@@ -82,7 +82,7 @@ public class DownloadRequestMessage extends Message {
      */
     @Override
     public String toString() {
-        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" getTimeStamp();
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
         String payload = ":download-request:" + targetIdentifier + ":" + fileString + ":";
 
         return header + payload;

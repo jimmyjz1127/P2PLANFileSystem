@@ -117,7 +117,9 @@ public class DownloadResultMessage extends Message {
      */
     @Override
     public String toString() {
-        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimeStamp();
-        String payload = ":download-result:" + responseIdentifier + ":" + fileString + ":" + fileTransferPort + ":";
+        String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
+        String payload = ":download-result:" + responseIdentifier + ":" + responseSerialNo + ":" + fileString + ":" + fileTransferPort + ":" + numMatchingFiles + ":";
+    
+        return header + payload;
     }
  }

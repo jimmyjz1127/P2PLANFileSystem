@@ -32,17 +32,17 @@ public class FileClient implements Runnable {
      */
     public FileClient(Configuration configuration, String serverHostname, int serverPort, int numMatchingFiles) {
         this.configuration = configuration;
-        this.serverHostName = serverHostName;
+        this.serverHostname = serverHostname;
         this.serverPort = serverPort;
         this.numMatchingFiles = numMatchingFiles;
 
         try {
-            InetAddress serverAddress = InetAddress.getByName(serverHostName);
+            InetAddress serverAddress = InetAddress.getByName(serverHostname);
             this.clientSocket = new Socket(serverAddress, serverPort);
             clientSocket.setSoTimeout(configuration.socketMaxTTL);
 
             this.in = new DataInputStream(clientSocket.getInputStream());
-            this.out = new DataInputStream(clientSocket.getOutputStream());
+            this.out = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
             System.err.println("FileClient.FileClient() : IOException -> " + e.getMessage());
         }
@@ -54,47 +54,57 @@ public class FileClient implements Runnable {
      */
     @Override
     public void run() {
-        try {
-            receiveFiles();
-        } catch (IOException e) {
-            System.err.println("FileClient.run() : IOException -> " + e.getMessage());
-        }
+        receiveFiles();
     }
 
 
     /**
-     * 
+     * Waits for incoming file data from remote file server.
      */
     public void receiveFiles() {
         try {
+            // Continue waiting as long as there are more files to expect from server
             while (numMatchingFiles > 0) {
                 String fileName = in.readUTF();
                 long   fileSize = in.readLong();
 
-                FileOutputStream fos = new FileOutputStream(configuration.downloadDir + "/" + serverHostname + "/" + fileName);
+                String saveFilePath = configuration.downloadDir + "/" + serverHostname + "/" + fileName;
+                File file = new File(saveFilePath);
+                File parentDir = file.getParentFile();
+
+                // Ensure the directory exists
+                if (!parentDir.exists() && !parentDir.mkdirs()) {
+                    throw new IOException("FileClient.receiveFiles : Failed to create directory: " + parentDir.getAbsolutePath());
+                }
+
+                FileOutputStream fos = new FileOutputStream(file);
 
                 byte[] buffer = new byte[2048];
                 long bytesRemaining = fileSize;
-                long bytesRead;
+                int bytesRead;
 
                 while (bytesRemaining > 0 && 
-                    bytesRead = dis.read(buffer,0, (int) Math.min(buffer.length, bytesRemaining)) != -1) {
+                    (bytesRead = in.read(buffer,0, (int) Math.min(buffer.length, bytesRemaining))) != -1) {
                     
                     fos.write(buffer,0,bytesRead);
                     bytesRemaining -= bytesRead;
                 }
 
+
+                System.out.println("test: " + bytesRemaining);
                 if (bytesRemaining <= 0) {
-                    System.out.println("Downloaded file " + GREEN + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
-                    numMatchingFiles--;
+                    System.out.println("* Downloaded file " + GREEN + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
+                    numMatchingFiles--;   
                 }
             }
-        } catch (IOException e) {
-            System.out.println("FileClient.receiveFiles() : Socket Timed Out");
+        } catch (SocketTimeoutException e) {
+            System.out.println("FileClient.receiveFiles() : Socket Timed Out for " + BLUE + serverHostname + ":" + serverPort + RESET);
             return;
+        } catch (IOException e) {
+            System.err.println("FileClient.receiveFiles() : IOException -> " + e.getMessage());
         } finally {
             try {
-                clientSocket.close()
+                clientSocket.close();
             } catch (IOException e) {
                 System.err.println("FileServer.handleIncomingRequests() : Failed to close serverSocket -> " + e.getMessage());
             }

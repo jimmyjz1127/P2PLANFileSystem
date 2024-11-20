@@ -16,7 +16,7 @@ import java.util.Date;
  * @author 190015412 
  * @since November 2024
  */
-public class DownloadErrorMessage extends message { 
+public class DownloadErrorMessage extends Message { 
     // private String filepath; 
     private String responseIdentifier;
     private long responseSerialNo;
@@ -83,8 +83,8 @@ public class DownloadErrorMessage extends message {
      */
     @Override
     public String toString() {
-        String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" + getTimeStamp();
-        String payload = ":download-result:" + responseIdentifier + ":";
+        String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" + getTimestamp();
+        String payload = ":download-result:" + responseIdentifier + ":" + responseSerialNo + ":";
 
         return header + payload;
     }

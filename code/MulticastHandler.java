@@ -26,6 +26,8 @@ public class MulticastHandler implements Runnable {
     public static final String RED = "\033[31;1m";
     public static final String GREEN = "\033[32;1m";
     public static final String BLUE = "\033[36;1m";
+    public static final String DOWNRIGHTARROW = "\u21B3";
+    public static final String REVERSED = "\u001b[7m";
 
 
     private MulticastEndpoint multicastEndpoint; 
@@ -341,12 +343,14 @@ public class MulticastHandler implements Runnable {
         // Check that download is possible for target machine
         if (targetAdvertisement != null && !targetAdvertisement.isDownloadPossible()) {
             System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : " + BLUE + targetIdentifier + RESET + " does not have download capability.");
+            System.out.println(DOWNRIGHTARROW + "HINT : use the " + REVERSED + ":nodes" + RESET + " command before to check capabilities.");
             return;
         } 
 
         // Check that we have received an advertisement from the given target-identifier
         if (advertisementReceiver.getAdvertisementMessage(targetIdentifier) == null) {
             System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : target " + BLUE + targetIdentifier + RESET + " does not exist in multicast group.");
+            System.out.println(DOWNRIGHTARROW + "HINT : use the " + REVERSED + ":nodes" + RESET + " command before to check what nodes are part of multicast group.");
             return; 
         }
 
@@ -359,7 +363,7 @@ public class MulticastHandler implements Runnable {
      * @param searchString : the search string provided by search-request.
      * @return ArrayList of files whose paths/file name substring match the given search string.
      */
-    public ArrayList<File> getMatchingFiles(String searchString) {
+    public ArrayList<File> getMatchingFiles(String searchString, boolean substringMatch) {
         ArrayList<File> matchingFiles = new ArrayList<>();
 
         // instantiate file object around directory to perform directory walk
@@ -372,7 +376,7 @@ public class MulticastHandler implements Runnable {
             return null;
         } 
 
-        searchDirectory(rootDirectory, searchString, "", matchingFiles);
+        searchDirectory(rootDirectory, searchString, "", matchingFiles, substringMatch);
         return matchingFiles;
     }
 
@@ -386,7 +390,7 @@ public class MulticastHandler implements Runnable {
      * @param matchingFiles : ArrayList of files whose paths/file name substring match the given search string.
      */
     public void searchDirectory(File currentDirectory, String searchString, 
-                                     String relativePath, ArrayList<File> matchingFiles) {
+                                     String relativePath, ArrayList<File> matchingFiles, boolean substringMatch) {
         // Obtain all files/subdirectories in current directory
         File[] files = currentDirectory.listFiles();
 
@@ -400,13 +404,15 @@ public class MulticastHandler implements Runnable {
                         relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
 
             // if we get a substring match
-            if (file.getAbsolutePath().contains(searchString)) {
+            if (substringMatch && file.getAbsolutePath().contains(searchString)) {
+                matchingFiles.add(file);
+            } else if (!substringMatch && file.getAbsolutePath().equals(searchString)) {
                 matchingFiles.add(file);
             }
 
             // if directory, further explore the sub-directory
             if (file.isDirectory()) {
-                searchDirectory(file, searchString, currentRelativePath, matchingFiles);
+                searchDirectory(file, searchString, currentRelativePath, matchingFiles, substringMatch);
             }
         }
   

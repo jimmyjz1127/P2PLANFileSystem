@@ -67,7 +67,7 @@ public class SearchRequestReceiver implements Runnable {
             Long serialNo     = msg.getSerialNo();
             String timestamp  = msg.getTimestamp();
 
-            ArrayList<File> matchingFiles = multicastHandler.getMatchingFiles(searchString);
+            ArrayList<File> matchingFiles = multicastHandler.getMatchingFiles(searchString, true);
 
             // If no matching results were found 
             if (matchingFiles == null || matchingFiles.isEmpty()) {

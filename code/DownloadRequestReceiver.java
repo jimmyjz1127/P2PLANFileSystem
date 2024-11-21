@@ -73,7 +73,7 @@ public class DownloadRequestReceiver implements Runnable {
             Long   serialNo   = msg.getSerialNo();
             String timestamp  = msg.getTimestamp(); 
 
-            ArrayList<File> matchingFilesAndDirectories = multicastHandler.getMatchingFiles(fileString);
+            ArrayList<File> matchingFilesAndDirectories = multicastHandler.getMatchingFiles(fileString, false);
 
             List<File> matchingFiles = matchingFilesAndDirectories.stream().filter(File::isFile).collect(Collectors.toList());
 

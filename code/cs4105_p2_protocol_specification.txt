@@ -213,12 +213,19 @@
   #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:
   #
 
+num-files := *DIGIT
+ # specifies the number of files matched with download-request file-string at target node
+
 <download-error> := "download-error" : <response-id> : num-files
   # Specifies the response-id of the machine that originally sent corresponding download-request, along 
   # with the number of files that matched the original file-string specified in corresponding download-request.
   # Similar to search-error, the serial number used in the header should match that of the 
   # corresponding request
   # 
-  # An example download-error to the download-request above would be : 
-  #   :saleem@my.host1:1001:20240912-170112.123:download-error:srv@my.host3.net:1001:
+  # An example download-error to the download-request that doesn't match any files would be : 
+  #   :saleem@my.host1:1001:20240912-170112.123:download-error:srv@my.host3.net:1001:0:
+  #
+  # An example download-error to a download-request that specifies an ambiguous file-string could be : 
+  #   :saleem@my.host1:1001:20240912-170112.123:download-error:srv@my.host3.net:1001:3:
+  # This download-error specifies that 3 files were found to match the file-string in the corresponding download-request
 

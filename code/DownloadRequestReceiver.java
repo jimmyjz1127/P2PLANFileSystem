@@ -29,6 +29,7 @@ public class DownloadRequestReceiver implements Runnable {
     public static final String RED = "\033[31;1m";
     public static final String GREEN = "\033[32;1m";
     public static final String BLUE = "\033[36;1m";
+    public static final String REVERSED = "\u001b[7m";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;

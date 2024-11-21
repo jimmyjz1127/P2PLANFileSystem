@@ -10,12 +10,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class DownloadResponseReceiver implements Runnable {
     /**
-     * ANSI escape codes for colored cmd output
+     * ANSI escape codes for cmd output
      */
     public static final String RESET = "\033[0m";
     public static final String RED = "\033[31;1m";
     public static final String GREEN = "\033[32;1m";
     public static final String BLUE = "\033[36;1m";
+    public static final String REVERSED = "\u001b[7m";
+    public static final String DOWNRIGHTARROW = "\u21B3";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -76,7 +78,7 @@ public class DownloadResponseReceiver implements Runnable {
                                    " matching files found @ " + BLUE + responseMessage.getIdentifier() + RESET);
             }
 
-            
+            System.out.println(DOWNRIGHTARROW + " HINT : Use the " + REVERSED + ":search" + RESET + " command to first determine the target node's files.");
         }
     }
 

@@ -63,7 +63,7 @@ public class SearchErrorMessage extends Message {
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" + getTimestamp();
-        String payload = ":search-error:" + responseIdentifier + ":";
+        String payload = ":search-error:" + responseIdentifier + ":" + responseSerialNo + ":";
 
         return header + payload;
     }

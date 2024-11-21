@@ -22,16 +22,18 @@ public class FileServer implements Runnable {
     private Configuration    configuration;
     private String           identifier;
     private File             fileToTransfer;
+    private String           requestHostname;
 
     /**
      * Constructor for FileServer runnable task.
      * 
      * @param configuration   : configuration of current machine.
      */
-    public FileServer(Configuration configuration, File fileToTransfer) {
+    public FileServer(Configuration configuration, File fileToTransfer, String requestHostname) {
         this.configuration   = configuration;
         this.fileToTransfer  = fileToTransfer;
         this.identifier      = configuration.identifier;
+        this.requestHostname = requestHostname;
         try {
             // obtain ephemeral socket
             this.serverSocket = new ServerSocket(0);
@@ -62,17 +64,22 @@ public class FileServer implements Runnable {
      */
     public void handleIncomingRequests() {
         try {
-            Socket clientSocket = serverSocket.accept();
-            // Get client's IP address and port
-            String clientAddress = clientSocket.getInetAddress().getHostName();
-            int clientPort = clientSocket.getPort();
+            boolean done = false;
+            while (!done) {
+                Socket clientSocket = serverSocket.accept();
+                // Get client's IP address and port
+                String clientAddress = clientSocket.getInetAddress().getHostName();
+                int clientPort = clientSocket.getPort();
 
-            DataOutputStream fileOut = new DataOutputStream(clientSocket.getOutputStream());
+                if (requestHostname.equals(clientAddress)) {
+                    DataOutputStream fileOut = new DataOutputStream(clientSocket.getOutputStream());
 
-            int bytesRead = sendFile(fileOut, fileToTransfer);
+                    int bytesRead = sendFile(fileOut, fileToTransfer);
 
-            configuration.log.writeLog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
-            
+                    configuration.log.writeLog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
+                    done = true;
+                }
+            }
         } catch (SocketTimeoutException e) {
             System.err.println("FileServer.handleIncomingRequests() : Socket Timed out");
             return;

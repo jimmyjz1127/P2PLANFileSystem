@@ -91,7 +91,7 @@ public class DownloadRequestReceiver implements Runnable {
             else {
                 File fileToTransfer = matchingFiles.get(0);
 
-                FileServer fileServer = new FileServer(configuration, fileToTransfer);
+                FileServer fileServer = new FileServer(configuration, fileToTransfer, hostname);
 
                 /**
                  * NTS : look into prevention methods of thread explosion

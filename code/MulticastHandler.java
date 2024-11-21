@@ -400,7 +400,7 @@ public class MulticastHandler implements Runnable {
                         relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
 
             // if we get a substring match
-            if (file.getName().contains(searchString)) {
+            if (file.getAbsolutePath().contains(searchString)) {
                 matchingFiles.add(file);
             }
 

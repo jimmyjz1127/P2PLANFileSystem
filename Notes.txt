@@ -27,6 +27,7 @@ Todo :
     could multi-thread the processing of search-request messages out of the structure 
 6. Make sure functionality works with capabilities 
 7. Consider queueing outgoing requests to make sure responese line-up one-to-one 
+8. Make FileServer verify that connection is to correct requesting node
 
 
 Important design decisions 

@@ -160,16 +160,16 @@
 
 # The general protocol is as follows 
 # 1. Requester sends <download-request> to a specific target node, specifying a file-string
-#    A file-string can match multiple files (is sub-string matched)
-# 2. The responder (containing requested file) determines all files that match file-string and 
-#    opens an ephemeral unicast socket that the requester can connect to in order to perform file transfer.
-# 3. If there are one or more matching files, the responder then sends back a <download-result>  containing the 
-#    addressing information of the ephemeral unicast socket (identifer and port) back to the requester, along with 
-#    a number indicating the number of files that matched the requester's file-string. 
-# 4. If there are not files that match the requester's filestring, a <download-error> message is sent back to
-#    the requester.
-# 5. Upon receiving a <download-result>, the requester connects to the server's ephemeral file transfer socket and 
-#    initiates the file transfer of the matched file(s)
+#    A file-string must uniquely identify a file on target node's filesystem (i.e should be a full logical path-name).
+# 2. The responder (containing requested file) determines whether the file-string in the download-request does 
+#    in fact match a unique file in its file system.
+# 3. If the file-string does match a single file, it will open an ephemeral TCP unicast socket that the requester 
+#    can connect to in order to perform file transfer. The responder will then respond with <download-result> message
+#    containing addressing information of the ephemeral socket. 
+# 4. If the file-string does not have any matches, or is ambiguous and matches multiple files, the responder will 
+#    respond with a <download-error> message. 
+# 5. Upon receiving a <download-result>, the requester connects to the responder's ephemeral file transfer socket, and 
+#    initiates the transfer of the requested file.
 
 <download-message> := <download-request> / <download-response>
 

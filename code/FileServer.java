@@ -19,19 +19,18 @@ public class FileServer implements Runnable {
 
     private int              port;            // Ephemeral port of server
     private ServerSocket     serverSocket;    // Ephemeral socket
-    private ArrayDeque<File> filesToDownload; // file(s) that client will download
     private Configuration    configuration;
     private String           identifier;
+    private File             fileToTransfer;
 
     /**
      * Constructor for FileServer runnable task.
      * 
-     * @param filesToDownload : ArrayDeque of file objects. All file objects files and not directories.
      * @param configuration   : configuration of current machine.
      */
-    public FileServer(ArrayDeque<File> filesToDownload, Configuration configuration) {
-        this.filesToDownload = filesToDownload;
+    public FileServer(Configuration configuration, File fileToTransfer) {
         this.configuration   = configuration;
+        this.fileToTransfer  = fileToTransfer;
         this.identifier      = configuration.identifier;
         try {
             // obtain ephemeral socket
@@ -59,7 +58,7 @@ public class FileServer implements Runnable {
     }
 
     /**
-     * Waits for client to initiate download, then upon initiation begins sending the file(s).
+     * Waits for client to initiate download, then upon initiation begins sending the file.
      */
     public void handleIncomingRequests() {
         try {
@@ -68,16 +67,12 @@ public class FileServer implements Runnable {
             String clientAddress = clientSocket.getInetAddress().getHostName();
             int clientPort = clientSocket.getPort();
 
-            // While there are still files to download 
-            while (!filesToDownload.isEmpty()) {
-                File file = filesToDownload.poll();
+            DataOutputStream fileOut = new DataOutputStream(clientSocket.getOutputStream());
 
-                DataOutputStream fileOut = new DataOutputStream(clientSocket.getOutputStream());
+            int bytesRead = sendFile(fileOut, fileToTransfer);
 
-                int bytesRead = sendFile(fileOut, file);
-
-                configuration.log.writeLog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
-            }
+            configuration.log.writeLog("tx-> " + identifier + " sent " + bytesRead + " bytes to " + clientAddress+":"+clientPort);
+            
         } catch (SocketTimeoutException e) {
             System.err.println("FileServer.handleIncomingRequests() : Socket Timed out");
             return;

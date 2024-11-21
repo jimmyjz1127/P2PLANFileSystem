@@ -20,6 +20,7 @@ public class DownloadErrorMessage extends Message {
     // private String filepath; 
     private String responseIdentifier;
     private long responseSerialNo;
+    private int numMatchingFiles;
 
     /**
      * Constructor to tx download-error message
@@ -27,13 +28,14 @@ public class DownloadErrorMessage extends Message {
      * @param responseIdentifier : identifier of rx download-request 
      * @param responseSerialNo : the serial number used in corresponding rx download-request
      */
-    public DownloadErrorMessage(String responseIdentifier, long responseSerialNo) {
+    public DownloadErrorMessage(String responseIdentifier, long responseSerialNo, int numMatchingFiles) {
         super();
 
         setSerialNo(responseSerialNo);
 
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
+        this.numMatchingFiles = numMatchingFiles;
     }
 
     /**
@@ -45,11 +47,12 @@ public class DownloadErrorMessage extends Message {
      * @param identifier : identifier of sender of download-error 
      * @param serialNo : should be same as corresponding tx download-request
      */
-    public DownloadErrorMessage(String responseIdentifier, long responseSerialNo, String timestamp, String identifier, long serialNo) {
+    public DownloadErrorMessage(String responseIdentifier, long responseSerialNo, int numMatchingFiles, String timestamp, String identifier, long serialNo) {
         super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
 
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
+        this.numMatchingFiles = numMatchingFiles;
     }
 
 
@@ -79,12 +82,19 @@ public class DownloadErrorMessage extends Message {
     }
 
     /**
+     * Getter for the numMatchingFiles
+     */
+    public int getNumMatchingFiles(){
+        return numMatchingFiles;
+    }
+
+    /**
      * To string to convert message into protocol string format
      */
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" + getTimestamp();
-        String payload = ":download-error:" + responseIdentifier + ":" + responseSerialNo + ":";
+        String payload = ":download-error:" + responseIdentifier + ":" + responseSerialNo + ":" + numMatchingFiles + ":";
 
         return header + payload;
     }

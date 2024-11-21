@@ -23,7 +23,6 @@ public class FileClient implements Runnable {
     private Socket           clientSocket;      // The socket connected to file server 
     private String           serverHostname;    // hostname of the server 
     private Configuration    configuration;     // Configuration of current machine
-    private int              numMatchingFiles;  // number of files to expect from file server 
     private DataInputStream  in;                // input stream from file server
     private DataOutputStream out;               // not necessary
 
@@ -31,11 +30,10 @@ public class FileClient implements Runnable {
     /**
      * Constructor
      */
-    public FileClient(Configuration configuration, String serverHostname, int serverPort, int numMatchingFiles) {
+    public FileClient(Configuration configuration, String serverHostname, int serverPort) {
         this.configuration = configuration;
         this.serverHostname = serverHostname;
         this.serverPort = serverPort;
-        this.numMatchingFiles = numMatchingFiles;
 
         try {
             InetAddress serverAddress = InetAddress.getByName(serverHostname);
@@ -65,37 +63,35 @@ public class FileClient implements Runnable {
     public void receiveFiles() {
         try {
             // Continue waiting as long as there are more files to expect from server
-            while (numMatchingFiles > 0) {
-                String fileName = in.readUTF();
-                long   fileSize = in.readLong();
+            String fileName = in.readUTF();
+            long   fileSize = in.readLong();
 
-                String saveFilePath = configuration.downloadDir + "/" + serverHostname + "/" + fileName;
-                File file = new File(saveFilePath);
-                File parentDir = file.getParentFile();
+            String saveFilePath = configuration.downloadDir + "/" + serverHostname + "/" + fileName;
+            File file = new File(saveFilePath);
+            File parentDir = file.getParentFile();
 
-                // Ensure the directory exists
-                if (!parentDir.exists() && !parentDir.mkdirs()) {
-                    throw new IOException("FileClient.receiveFiles : Failed to create directory: " + parentDir.getAbsolutePath());
-                }
-
-                FileOutputStream fos = new FileOutputStream(file);
-
-                byte[] buffer = new byte[2048];
-                long bytesRemaining = fileSize;
-                int bytesRead;
-
-                while (bytesRemaining > 0 && 
-                    (bytesRead = in.read(buffer,0, (int) Math.min(buffer.length, bytesRemaining))) != -1) {
-                    
-                    fos.write(buffer,0,bytesRead);
-                    bytesRemaining -= bytesRead;
-                }
-
-                if (bytesRemaining <= 0) {
-                    System.out.println("* Downloaded file " + REVERSED + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
-                    numMatchingFiles--;   
-                }
+            // Ensure the directory exists
+            if (!parentDir.exists() && !parentDir.mkdirs()) {
+                throw new IOException("FileClient.receiveFiles() : Failed to create directory: " + parentDir.getAbsolutePath());
             }
+
+            FileOutputStream fos = new FileOutputStream(file);
+
+            byte[] buffer = new byte[2048];
+            long bytesRemaining = fileSize;
+            int bytesRead;
+
+            while (bytesRemaining > 0 && 
+                (bytesRead = in.read(buffer,0, (int) Math.min(buffer.length, bytesRemaining))) != -1) {
+                
+                fos.write(buffer,0,bytesRead);
+                bytesRemaining -= bytesRead;
+            }
+
+            if (bytesRemaining <= 0) {
+                System.out.println("Downloaded file " + REVERSED + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
+            }
+            
         } catch (SocketTimeoutException e) {
             System.out.println("FileClient.receiveFiles() : Socket Timed Out for " + BLUE + serverHostname + ":" + serverPort + RESET);
             return;

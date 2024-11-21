@@ -55,19 +55,28 @@ public class DownloadResponseReceiver implements Runnable {
             DownloadResultMessage downloadResultMessage = (DownloadResultMessage) responseMessage;
 
             String identifier       = downloadResultMessage.getIdentifier();
-            int    numMatchingFiles = downloadResultMessage.getNumMatchingFiles();
             String hostname         = downloadResultMessage.getHostname();
             int    serverPort       = downloadResultMessage.getFileTransferPort();
 
-            System.out.println(GREEN + "[DOWNLOAD RESULT]" + RESET + " " + numMatchingFiles + " file(s) matched @ " + BLUE + identifier + RESET);
+            System.out.println(GREEN + "[DOWNLOAD RESULT]" + RESET + " found file @ " + BLUE + identifier + RESET);
             System.out.println("Initiating file transfer...");
 
-            FileClient fileClient = new FileClient(configuration, hostname, serverPort, numMatchingFiles);
+            FileClient fileClient = new FileClient(configuration, hostname, serverPort);
             Thread t = new Thread(fileClient);
             t.start();
         } else {
-            System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : No Results @ " + 
+            DownloadErrorMessage downloadErrorMessage = (DownloadErrorMessage) responseMessage;
+            int numMatchingFiles = downloadErrorMessage.getNumMatchingFiles();
+
+            if (numMatchingFiles == 0) {
+                System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : No Results @ " + 
                                BLUE + responseMessage.getIdentifier() + RESET);
+            } else {
+                System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : Non-unique file-string -> " + numMatchingFiles + 
+                                   " matching files found @ " + BLUE + responseMessage.getIdentifier() + RESET);
+            }
+
+            
         }
     }
 

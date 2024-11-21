@@ -181,15 +181,16 @@
 
 <download-request> := "download-request" : <target-identifier> : file-string
   # A download request specifies a target host in the multicast group from which,
-  # to download a specified file string. The file string can match multiple resources on target host's file system.
+  # to download a specified file string. The file string must match a unique resource in 
+  # target node's filesystem (i.e speicy full logical path-name).
   #
   # An example download request specifying a unique file would be : 
   #
   #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:root_dir/dir1/text1-1.txt:
   #
-  # An example download request specifying a non-unique file-string would be : 
+  # An example download request with a possible bad (non-unique) file-string : 
   #   
-  #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:text1:
+  #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:.txt:
 
 <response-identifier> := <identifier> : <serial-number>
   # The identifier and port should be the same as was used in corresponding download-request 
@@ -200,30 +201,23 @@
 <response-serial-number> := *DIGIT
   # The serial number used in corresponding download-request message
 
-num-files := *DIGIT 
-  # the number of files that were matched with a <download-request> file-string
-
-<download-result> := "download-result" : <response-identifier> : file-string : <file-transfer-port> : num-files :
-  # Specifices the identifier of machine which originally send out download request, along 
-  # with a the number of files that match the file-string provided in the original download-request, 
-  # the  port number of the current machine for which the remote machine can connect to in order to perform TCP file transfer 
+<download-result> := "download-result" : <response-identifier> : file-string : <file-transfer-port> :
+  # Specifices the identifier of machine which originally send out download request, along with 
+  # the port number of the current machine for which the remote machine can connect to in order to perform TCP file transfer 
   #
   # Note that one or more download-result messages may be sent back to requester if the file-string
   # in the original request has multiple matches (similar to search). 
   #
   # An example download-result to the download-request above would be : 
   # 
-  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:1:
-  #
-  # An example download-result where multiple files (3) match the file-string would be : 
-  #
-  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:text1:4105:3:
+  #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:
   #
 
-<download-error> := "download-error" : <response-id>
-  # Specifies the response-id of the machine that originally sent corresponding download-request.
+<download-error> := "download-error" : <response-id> : num-files
+  # Specifies the response-id of the machine that originally sent corresponding download-request, along 
+  # with the number of files that matched the original file-string specified in corresponding download-request.
   # Similar to search-error, the serial number used in the header should match that of the 
-  # corresponding request 
+  # corresponding request
   # 
   # An example download-error to the download-request above would be : 
   #   :saleem@my.host1:1001:20240912-170112.123:download-error:srv@my.host3.net:1001:

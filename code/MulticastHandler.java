@@ -272,10 +272,9 @@ public class MulticastHandler implements Runnable {
                     responseSerialNo = Long.parseLong(payload[1]);
                     String fileString = payload[2];
                     int fileTransferPort = Integer.parseInt(payload[3]);
-                    int numMatchingFiles = Integer.parseInt(payload[4]);
 
                     DownloadResultMessage downloadResultMessage = 
-                                        new DownloadResultMessage(fileString, responseIdentifier, responseSerialNo, fileTransferPort, numMatchingFiles, timestamp, identifier,serialNo);
+                                        new DownloadResultMessage(fileString, responseIdentifier, responseSerialNo, fileTransferPort, timestamp, identifier,serialNo);
                     return downloadResultMessage;
                 }
                 return null;
@@ -284,9 +283,10 @@ public class MulticastHandler implements Runnable {
 
                 if (responseIdentifier.equals(configuration.identifier)) {
                     responseSerialNo = Long.parseLong(payload[1]);
+                    int numMatchingFiles = Integer.parseInt(payload[2]);
 
                     DownloadErrorMessage downloadErrorMessage = 
-                                        new DownloadErrorMessage(responseIdentifier, responseSerialNo, timestamp, identifier, serialNo);
+                                        new DownloadErrorMessage(responseIdentifier, responseSerialNo, numMatchingFiles, timestamp, identifier, serialNo);
                     return downloadErrorMessage;                    
                 }
                 return null;                

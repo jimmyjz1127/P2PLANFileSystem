@@ -21,8 +21,6 @@ public class DownloadResultMessage extends Message {
     private String responseIdentifier;  // Identifier of requester 
     private long   responseSerialNo;    // Serial Number of download-request 
     private int    fileTransferPort;    // TCP port to connect to machine containing file 
-    private int    numMatchingFiles;    // The number of files that match the fileString
-
 
     /**
      * Constructor for tx download-result message 
@@ -32,14 +30,13 @@ public class DownloadResultMessage extends Message {
      * @param responseSerialNo : the serial number of corresponding rx download-request message
      * @param fileTransferPort : port number on current machine for which remote machine can download file from 
      */
-    public DownloadResultMessage(String fileString, String responseIdentifier, long responseSerialNo, int fileTransferPort, int numMatchingFiles) {
+    public DownloadResultMessage(String fileString, String responseIdentifier, long responseSerialNo, int fileTransferPort) {
         super();
 
         this.fileString = fileString;
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
         this.fileTransferPort = fileTransferPort;
-        this.numMatchingFiles = numMatchingFiles;
     }
 
     /**
@@ -54,14 +51,13 @@ public class DownloadResultMessage extends Message {
      * @param serialNo : the serial number of incoming download-result
      */
     public DownloadResultMessage(String fileString, String responseIdentifier, long responseSerialNo, int fileTransferPort,
-                                 int numMatchingFiles, String timestamp, String identifier, long serialNo) {
+                                 String timestamp, String identifier, long serialNo) {
         super(identifier.split("@")[0], identifier.split("@")[1], timestamp, identifier, serialNo);
         
         this.fileString = fileString;
         this.responseIdentifier = responseIdentifier;
         this.responseSerialNo = responseSerialNo;
         this.fileTransferPort = fileTransferPort;
-        this.numMatchingFiles = numMatchingFiles;
     }
 
     /**
@@ -105,20 +101,12 @@ public class DownloadResultMessage extends Message {
     }
 
     /**
-     * Getter for numMatchingFiles;
-     */
-    public int getNumMatchingFiles() {
-        return numMatchingFiles;
-    }
-
-
-    /**
      * To string to convert message into protocol string format
      */
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + getSerialNo() + ":" + getTimestamp();
-        String payload = ":download-result:" + responseIdentifier + ":" + responseSerialNo + ":" + fileString + ":" + fileTransferPort + ":" + numMatchingFiles + ":";
+        String payload = ":download-result:" + responseIdentifier + ":" + responseSerialNo + ":" + fileString + ":" + fileTransferPort + ":";
     
         return header + payload;
     }

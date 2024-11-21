@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.stream.Collectors;
 
 
 /**
@@ -71,21 +72,25 @@ public class DownloadRequestReceiver implements Runnable {
             Long   serialNo   = msg.getSerialNo();
             String timestamp  = msg.getTimestamp(); 
 
-            ArrayList<File> matchingFiles = multicastHandler.getMatchingFiles(fileString);
+            ArrayList<File> matchingFilesAndDirectories = multicastHandler.getMatchingFiles(fileString);
 
-            ArrayDeque<File> filesToDownload = new ArrayDeque<File>();
-            for (File file : matchingFiles) {
-                if (file.isFile()) {
-                    filesToDownload.add(file);
-                }
-            }
+            List<File> matchingFiles = matchingFilesAndDirectories.stream().filter(File::isFile).collect(Collectors.toList());
 
             // If no matching results were found 
-            if (filesToDownload == null || filesToDownload.isEmpty()) {
-                DownloadErrorMessage response = new DownloadErrorMessage(identifier, serialNo);
+            if (matchingFiles == null || matchingFiles.isEmpty()) {
+                DownloadErrorMessage response = new DownloadErrorMessage(identifier, serialNo, 0);
                 multicastHandler.txMessage(response);
-            } else {
-                FileServer fileServer = new FileServer(filesToDownload, configuration);
+            } 
+            // If file-string was ambiguous (non-unique)
+            else if (matchingFiles.size() > 1) {
+                DownloadErrorMessage response = new DownloadErrorMessage(identifier, serialNo, matchingFiles.size());
+                multicastHandler.txMessage(response);
+            } 
+            // If only one uniquely matched file
+            else {
+                File fileToTransfer = matchingFiles.get(0);
+
+                FileServer fileServer = new FileServer(configuration, fileToTransfer);
 
                 /**
                  * NTS : look into prevention methods of thread explosion
@@ -97,7 +102,7 @@ public class DownloadRequestReceiver implements Runnable {
                 String rootDir = configuration.rootDir;
                 int port = fileServer.getPort();
 
-                DownloadResultMessage response = new DownloadResultMessage(fileString, identifier, serialNo, port, matchingFiles.size());
+                DownloadResultMessage response = new DownloadResultMessage(fileString, identifier, serialNo, port);
                 multicastHandler.txMessage(response);
             }
         }

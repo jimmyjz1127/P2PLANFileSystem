@@ -25,9 +25,9 @@ public class DownloadRequestReceiver implements Runnable {
      * ANSI escape codes for colored cmd output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -82,7 +82,7 @@ public class DownloadRequestReceiver implements Runnable {
 
             // If no matching results were found 
             if (filesToDownload == null || filesToDownload.isEmpty()) {
-                Message response = new DownloadErrorMessage(identifier, serialNo);
+                DownloadErrorMessage response = new DownloadErrorMessage(identifier, serialNo);
                 multicastHandler.txMessage(response);
             } else {
                 FileServer fileServer = new FileServer(filesToDownload, configuration);
@@ -97,10 +97,8 @@ public class DownloadRequestReceiver implements Runnable {
                 String rootDir = configuration.rootDir;
                 int port = fileServer.getPort();
 
-
                 DownloadResultMessage response = new DownloadResultMessage(fileString, identifier, serialNo, port, matchingFiles.size());
                 multicastHandler.txMessage(response);
-
             }
         }
     }

@@ -20,9 +20,10 @@ public class SearchResponseReceiver implements Runnable {
      * ANSI escape codes for colored cmd output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
+    public static final String REVERSED = "\u001b[7m";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -56,7 +57,7 @@ public class SearchResponseReceiver implements Runnable {
     public void processSearchResponses(Message responseMessage) {
         if (responseMessage.getType().equals("search-result")) {
             String result = ((SearchResultMessage) responseMessage).getSearchResultString();
-            System.out.println(GREEN + "[Search Result] : " + RESET + BLUE + result + RESET + " @ " + BLUE + responseMessage.getIdentifier() + RESET);
+            System.out.println(GREEN + "[Search Result] : " + RESET + REVERSED + result + RESET + " @ " + BLUE + responseMessage.getIdentifier() + RESET);
         } else if (responseMessage.getType().equals("search-error")) {
             System.out.println(RED + "[Search Error] :" +  RESET + " No Result @ " + BLUE + responseMessage.getIdentifier() + RESET);
         }

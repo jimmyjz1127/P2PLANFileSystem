@@ -23,9 +23,9 @@ public class MulticastHandler implements Runnable {
      * ANSI Escape codes for colored CMD output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
 
 
     private MulticastEndpoint multicastEndpoint; 
@@ -54,7 +54,7 @@ public class MulticastHandler implements Runnable {
 
             // Join the multicast group k
             multicastEndpoint.join();
-            configuration.log.writeLog("Joined Multicast Group : " + this.configuration.mGroup);
+            configuration.log.writeLog(configuration.identifier + " Joined Multicast Group");
 
             // Create scheduled threadpool
             scheduler = Executors.newScheduledThreadPool(6);
@@ -127,6 +127,9 @@ public class MulticastHandler implements Runnable {
                         downloadRequestReceiver.addDownloadRequest((DownloadRequestMessage) message);
                         break;
                     case "download-result" :
+                        downloadResponseReceiver.addDownloadResponse(message);
+                        break;
+                    case "download-error" :
                         downloadResponseReceiver.addDownloadResponse(message);
                         break;
                 }
@@ -339,6 +342,12 @@ public class MulticastHandler implements Runnable {
         if (targetAdvertisement != null && !targetAdvertisement.isDownloadPossible()) {
             System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : " + BLUE + targetIdentifier + RESET + " does not have download capability.");
             return;
+        } 
+
+        // Check that we have received an advertisement from the given target-identifier
+        if (advertisementReceiver.getAdvertisementMessage(targetIdentifier) == null) {
+            System.out.println(RED + "[DOWNLOAD ERROR]" + RESET + " : target " + BLUE + targetIdentifier + RESET + " does not exist in multicast group.");
+            return; 
         }
 
         DownloadRequestMessage downloadRequestMessage = new DownloadRequestMessage(fileString, targetIdentifier);

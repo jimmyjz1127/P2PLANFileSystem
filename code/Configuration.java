@@ -25,7 +25,7 @@ public class Configuration
   public Properties    properties;
   public String        propertiesFile = "filetreebrowser.properties";
   public LogFileWriter log;
-  public String        logFile = "filetreebrowser.log";
+  public String        logFile = "logs/filetreebrowser.log";
 
   // These default values can be overriden in the properties file.
 
@@ -111,10 +111,16 @@ public class Configuration
         properties.load(p);
         String s;
 
-        if ((s = properties.getProperty("logFile")) != null) {
+        // if ((s = properties.getProperty("logFile")) != null) {
+        //   System.out.println(propertiesFile + " logFile: " + logFile + " -> " + s);
+        //   logFile = new String(s);
+        // }
+        if (identifier != null) {
+          s = "logs/" + identifier + ".log";
           System.out.println(propertiesFile + " logFile: " + logFile + " -> " + s);
-          logFile = new String(s);
+          logFile = s;
         }
+        
 
         if ((s = properties.getProperty("id")) != null) {
           System.out.println(propertiesFile + " id: " + id + " -> " + s);

@@ -14,9 +14,10 @@ public class FileClient implements Runnable {
      * ANSI escape codes for coloured cmd output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
+    public static final String REVERSED = "\u001b[7m";
 
     private int              serverPort;        // The port used by file server to serve files
     private Socket           clientSocket;      // The socket connected to file server 
@@ -90,10 +91,8 @@ public class FileClient implements Runnable {
                     bytesRemaining -= bytesRead;
                 }
 
-
-                System.out.println("test: " + bytesRemaining);
                 if (bytesRemaining <= 0) {
-                    System.out.println("* Downloaded file " + GREEN + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
+                    System.out.println("* Downloaded file " + REVERSED + "[" + fileName + "]" + RESET + " from " + BLUE + serverHostname + RESET);
                     numMatchingFiles--;   
                 }
             }

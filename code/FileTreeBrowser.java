@@ -30,9 +30,10 @@ public final class FileTreeBrowser {
   final static String download = new String(":download");
 
   public static final String RESET = "\033[0m";
-  public static final String RED = "\033[31m";
-  public static final String GREEN = "\033[32m";
-  public static final String BLUE = "\033[34m";
+  public static final String RED = "\033[31;1m";
+  public static final String GREEN = "\033[32;1m";
+  public static final String BLUE = "\033[36;1m";
+  public static final String REVERSED = "\u001b[7m";
 
   final static String propertiesFile = "filetreebrowser.properties";
   static Configuration configuration;
@@ -64,7 +65,6 @@ public final class FileTreeBrowser {
    */
   public static void main(String[] args) {
     configuration = new Configuration(propertiesFile);
-    System.out.println(configuration.maximumAdvertisementPeriod);
     rootPath = getPathName(new File(configuration.rootDir));
 
     InputStream keyboard = System.in;
@@ -273,11 +273,11 @@ public final class FileTreeBrowser {
 
     String targetIdentifier = scanner.nextLine();
 
-    System.out.println("Sending out download request for " + GREEN + fileString + RESET + " to " + BLUE + targetIdentifier + RESET + "...\n");
+    System.out.println("Sending out download request for " + REVERSED + fileString + RESET + " to " + BLUE + targetIdentifier + RESET + "...\n");
 
     multicastHandler.txDownloadRequest(fileString, targetIdentifier);
 
-    try { Thread.sleep(1000); }
+    try { Thread.sleep(1500); }
     catch (InterruptedException e) { } // Thread.sleep() - do nothing
   }
 

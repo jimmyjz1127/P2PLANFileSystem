@@ -84,7 +84,7 @@ public class DownloadErrorMessage extends Message {
     @Override
     public String toString() {
         String header = ":" + getIdentifier() + ":" + responseSerialNo + ":" + getTimestamp();
-        String payload = ":download-result:" + responseIdentifier + ":" + responseSerialNo + ":";
+        String payload = ":download-error:" + responseIdentifier + ":" + responseSerialNo + ":";
 
         return header + payload;
     }

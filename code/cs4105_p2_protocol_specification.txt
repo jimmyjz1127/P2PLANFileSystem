@@ -163,9 +163,13 @@
 #    A file-string can match multiple files (is sub-string matched)
 # 2. The responder (containing requested file) determines all files that match file-string and 
 #    opens an ephemeral unicast socket that the requester can connect to in order to perform file transfer.
-# 3. The responder then sends back a <download-response> for each matching file, containing the 
-#    addressing information of the ephemeral unicast socket (identifer and port) back to the requester
-# 4. For each <download-result> that the client gets back from the server, it sends back
+# 3. If there are one or more matching files, the responder then sends back a <download-result>  containing the 
+#    addressing information of the ephemeral unicast socket (identifer and port) back to the requester, along with 
+#    a number indicating the number of files that matched the requester's file-string. 
+# 4. If there are not files that match the requester's filestring, a <download-error> message is sent back to
+#    the requester.
+# 5. Upon receiving a <download-result>, the requester connects to the server's ephemeral file transfer socket and 
+#    initiates the file transfer of the matched file(s)
 
 <download-message> := <download-request> / <download-response>
 
@@ -174,7 +178,6 @@
 <target-identifier> := uid @ fqdn
   # target identifier is defined the same as before, but specifies the machine from which 
   # we want to download a file from.
-
 
 <download-request> := "download-request" : <target-identifier> : file-string
   # A download request specifies a target host in the multicast group from which,
@@ -197,15 +200,17 @@
 <response-serial-number> := *DIGIT
   # The serial number used in corresponding download-request message
 
+num-files := *DIGIT 
+  # the number of files that were matched with a <download-request> file-string
+
 <download-result> := "download-result" : <response-identifier> : file-string : <file-transfer-port> : num-files :
   # Specifices the identifier of machine which originally send out download request, along 
   # with a the number of files that match the file-string provided in the original download-request, 
   # the  port number of the current machine for which the remote machine can connect to in order to perform TCP file transfer 
   #
   # Note that one or more download-result messages may be sent back to requester if the file-string
-  # in the original request has multiple matches (similar to search). If this is the case, the client 
-  # (requester) will have to send separate <unicast-download-request>
-  # 
+  # in the original request has multiple matches (similar to search). 
+  #
   # An example download-result to the download-request above would be : 
   # 
   #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:1:

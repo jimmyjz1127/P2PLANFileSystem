@@ -13,9 +13,9 @@ public class FileServer implements Runnable {
      * ANSI escape codes for coloured cmd output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
 
     private int              port;            // Ephemeral port of server
     private ServerSocket     serverSocket;    // Ephemeral socket

@@ -22,9 +22,10 @@ import java.net.NetworkInterface;
  */
 public class AdvertisementReceiver implements Runnable {
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
+    public static final String UNDERLINE = "\u001b[4m";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -33,7 +34,6 @@ public class AdvertisementReceiver implements Runnable {
     private String identifier;
 
     private final ConcurrentHashMap<String, AdvertisementMessage> advertisements;
-    // private final ScheduledExecutorService scheduler;
 
     /**
      * Constructor for AdvertisementReceiver runnable task.
@@ -104,10 +104,10 @@ public class AdvertisementReceiver implements Runnable {
      * Returns a string of all advertisements (should be displayed when user enters ":node")
      */
     public void getAdvertisementsString() {
-        int count = 0;
+        int count = 1;
 
         for (AdvertisementMessage message : advertisements.values()) {
-            System.out.println("[" + count++ + "]");
+            System.out.println("Node [" + count++ + "]");
             System.out.println("     Identifier : " + BLUE + message.getIdentifier() + RESET);
             System.out.println("     Port       : " + BLUE + message.getServerPort() + RESET);
             System.out.println("     Services   : " + BLUE + message.getServicesString() + RESET);

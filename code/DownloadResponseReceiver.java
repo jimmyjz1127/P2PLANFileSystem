@@ -13,9 +13,9 @@ public class DownloadResponseReceiver implements Runnable {
      * ANSI escape codes for colored cmd output
      */
     public static final String RESET = "\033[0m";
-    public static final String RED = "\033[31m";
-    public static final String GREEN = "\033[32m";
-    public static final String BLUE = "\033[34m";
+    public static final String RED = "\033[31;1m";
+    public static final String GREEN = "\033[32;1m";
+    public static final String BLUE = "\033[36;1m";
 
     private MulticastHandler multicastHandler;
     private Configuration configuration;
@@ -59,7 +59,7 @@ public class DownloadResponseReceiver implements Runnable {
             String hostname         = downloadResultMessage.getHostname();
             int    serverPort       = downloadResultMessage.getFileTransferPort();
 
-            System.out.println(GREEN + "[DOWNLOAD RESULT]" + RESET + " " + numMatchingFiles + " file(s) matched @" + BLUE + identifier + RESET);
+            System.out.println(GREEN + "[DOWNLOAD RESULT]" + RESET + " " + numMatchingFiles + " file(s) matched @ " + BLUE + identifier + RESET);
             System.out.println("Initiating file transfer...");
 
             FileClient fileClient = new FileClient(configuration, hostname, serverPort, numMatchingFiles);

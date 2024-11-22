@@ -1,2 +1,3 @@
 code/*.class
+code/downloads/*
 code/logs/*.log

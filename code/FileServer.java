@@ -123,5 +123,17 @@ public class FileServer implements Runnable {
         return totalBytesSent;
     }
 
-
+    /**
+     *  For testing that FileServer will only send file to the client it expects 
+     *  to connect (the one that sent the original download-request)
+     */
+    public static void main(String[] args) {
+        Configuration configuration = new Configuration("filetreebrowser.properties");
+        File file = new File("root_dir/dir1/text1-1.txt");
+        String requesterHostname = "pc7-007-l.cs.st-andrews.ac.uk";
+        FileServer server = new FileServer(configuration, file, requesterHostname);
+        System.out.println(server.getPort()); // copy and paste into other node when running java FileClient <serverPort>
+        Thread t = new Thread(server);
+        t.start();        
+    }
 }

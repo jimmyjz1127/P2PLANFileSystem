@@ -68,8 +68,10 @@ public class MulticastHandler implements Runnable {
             
             // Create advertisement sender and add to threadpool
             advertisementSender = new AdvertisementSender(this);
+            // Create random delay between 100 to 500 ms
+            int randomDelay = 100 + (int) (Math.random() * (500 - 100 + 1));
             // Schedule the advertisement sender to send out ad at an interval
-            scheduler.scheduleAtFixedRate(advertisementSender, 0, configuration.sleepTime, TimeUnit.MILLISECONDS);
+            scheduler.scheduleAtFixedRate(advertisementSender, randomDelay, configuration.sleepTime, TimeUnit.MILLISECONDS);
 
             // Create search request receiever and add to threadpool
             searchRequestReceiver = new SearchRequestReceiver(this);
@@ -403,10 +405,14 @@ public class MulticastHandler implements Runnable {
             String currentRelativePath = 
                         relativePath.isEmpty() ? file.getName() : relativePath + File.separator + file.getName();
 
+            // System.out.println("------------------------");
+            // System.out.println(file.getAbsolutePath());
+            // System.out.println(searchString);
+
             // if we get a substring match
             if (substringMatch && file.getAbsolutePath().contains(searchString)) {
                 matchingFiles.add(file);
-            } else if (!substringMatch && file.getAbsolutePath().equals(searchString)) {
+            } else if (!substringMatch && file.getAbsolutePath().split("code/")[1].equals(searchString)) {
                 matchingFiles.add(file);
             }
 

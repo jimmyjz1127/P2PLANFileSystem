@@ -105,4 +105,23 @@ public class FileClient implements Runnable {
             }
         }
     }
+
+    /**
+     *  For testing that FileServer will only send file to the client it expects 
+     *  to connect (the one that sent the original download-request)
+     * 
+     * You must first run "java FileServer" and copy and paste the outputted port as a cmdline argument to this file 
+     * --> java FileClient <server port copied from output of running "java FileServer">
+     */
+    public static void main(String[] args) {
+        // after running "java FileServer", copy and paste the outputed port as cmd argument for this file
+        int serverPort = Integer.parseInt(args[0]);
+
+        Configuration configuration = new Configuration("filetreebrowser.properties");
+        String fileString = "root_dir/dir1/text1-1.txt";
+        String serverHostname = "pc7-033-l.cs.st-andrews.ac.uk";
+        FileClient client = new FileClient(configuration, serverHostname, serverPort);
+        Thread t = new Thread(client);
+        t.start();
+    }
 }

@@ -69,4 +69,11 @@ public class SearchResponseReceiver implements Runnable {
     public void addSearchResponse(Message searchResponseMessage) {
         searchResponses.add(searchResponseMessage);
     }
+
+    /**
+     * 
+     */
+    public boolean isEmpty() {
+        return searchResponses.isEmpty();
+    }
 }

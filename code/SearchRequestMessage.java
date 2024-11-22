@@ -9,7 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-
+/**
+ * SearchRequestMessage object for storing protocol information specific
+ * to search-request messages 
+ * 
+ * @author 190015412
+ * @since November 2024
+ */
 public class SearchRequestMessage extends Message {
     private String searchString;       // The search string to query
 

@@ -254,8 +254,8 @@ public final class FileTreeBrowser {
 
     multicastHandler.txSearchRequest(searchString);
 
-    try { Thread.sleep(1000); }
-    catch (InterruptedException e) { } // Thread.sleep() - do nothing
+    try { Thread.sleep(configuration.sleepTime); }
+    catch (InterruptedException e) { } // Thread.sleep() - do nothing    
 
   }
 

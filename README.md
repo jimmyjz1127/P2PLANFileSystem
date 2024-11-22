@@ -19,7 +19,7 @@
 | `AdvertisementSender.java` | Runnable task for sending out advertisements about current machine to other nodes in multicast group  |
 | `ByteReader.java` | For reading in byte-level data from inputstreams  |
 | `Configuration.java` | For implementing `Configuration` object storing configuration data about current machine  |
-| `cs4105_p2_protocol_specification.txt` | Protocol specification file  |
+| `protocol_specification.txt` | Protocol specification file  |
 | `DownloadErrorMessage.java` | Message object for storing protocol information on `<download-error>` messages  |
 | `DownloadRequestMessage.java` | Message object for storing protocol information on `<download-request>` messages |
 | `DownloadResponseReceiver.java` | Runnable Task for handing and processing received `<download-response>` messages such as `<download-result>` and `<download-error>`  |

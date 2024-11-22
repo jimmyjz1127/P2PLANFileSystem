@@ -182,42 +182,41 @@
 <download-request> := "download-request" : <target-identifier> : file-string
   # A download request specifies a target host in the multicast group from which,
   # to download a specified file string. The file string must match a unique resource in 
-  # target node's filesystem (i.e speicy full logical path-name).
+  # target node's filesystem (i.e full logical path-name).
   #
   # An example download request specifying a unique file would be : 
   #
   #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:root_dir/dir1/text1-1.txt:
   #
-  # An example download request with a possible bad (non-unique) file-string : 
+  # An example download request with a possible bad (non-unique) file-string ".txt" : 
   #   
   #   :srv@my.host3.net:1001:20240912-170101.001:download-request:saleem@my.host1.net:.txt:
 
+
 <response-identifier> := <identifier> : <serial-number>
-  # The identifier and port should be the same as was used in corresponding download-request 
+  # The identifier and port should be the same as corresponding download-request 
 
 <file-transfer-port> := *DIGIT
   # The port used to connect to machine containing the desired file to perform file transfer over TCP
 
-<response-serial-number> := *DIGIT
-  # The serial number used in corresponding download-request message
-
 <download-result> := "download-result" : <response-identifier> : file-string : <file-transfer-port> :
-  # Specifices the identifier of machine which originally send out download request, along with 
+  # Specifices the identifier of machine which originally sent out download request, along with 
   # the port number of the current machine for which the remote machine can connect to in order to perform TCP file transfer 
   #
-  # Note that one or more download-result messages may be sent back to requester if the file-string
-  # in the original request has multiple matches (similar to search). 
+  # a download-result message will only be sent if the file-string identifies the full logical path-name of exactly one file 
   #
-  # An example download-result to the download-request above would be : 
+  # An example download-result to the valid download-request above would be : 
   # 
   #   :saleem@my.host1:1111:20240912-170112.123:download-result:srv@my.host3.net:1001:root_dir/dir1/text1-1.txt:4105:
   #
 
 num-files := *DIGIT
  # specifies the number of files matched with download-request file-string at target node
+ # Will only either be 0 (indicating that no files were matched against file string), or some number 
+ # greater than 1, which would indicate that the file-string was ambiguous and matched multiple files.
 
-<download-error> := "download-error" : <response-id> : num-files
-  # Specifies the response-id of the machine that originally sent corresponding download-request, along 
+<download-error> := "download-error" : <response-identifier> : num-files
+  # Specifies the response identifier of the machine that originally sent corresponding download-request, along 
   # with the number of files that matched the original file-string specified in corresponding download-request.
   # Similar to search-error, the serial number used in the header should match that of the 
   # corresponding request

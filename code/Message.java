@@ -14,6 +14,9 @@ import java.text.ParseException;
 /**
  * Class implementation for Message object.
  * Used to represent and contain information for any protocol message.
+ * 
+ * @author 190015412
+ * @since November 2024
  */
 public abstract class Message {
     // Serial number for the message header

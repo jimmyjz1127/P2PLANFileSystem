@@ -11,6 +11,9 @@ import java.util.Date;
 
 /**
  * AdvertisementMessage child class of Message class.
+ * 
+ * @author 190015412
+ * @since November 2024
  */
 public class AdvertisementMessage extends Message {
     private int serverPort;                     // port the server (which sent advertisement) is listening on  

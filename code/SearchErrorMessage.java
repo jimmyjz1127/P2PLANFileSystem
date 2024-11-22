@@ -11,6 +11,9 @@ import java.util.Date;
 
 /**
  * Class for SearchErrorMessage.
+ * 
+ * @author 190015412
+ * @since November 2024
  */
 public class SearchErrorMessage extends Message {
     String responseIdentifier; // the identifier of host that sent search-request.

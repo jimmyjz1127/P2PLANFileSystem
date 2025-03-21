@@ -1,5 +1,5 @@
-# CS4105 Practical 2 : Discover and Download - LAN-based, distributed, multicast, file-download application
-## Matriculation ID : 190015412
+# Discover and Download - LAN-based, distributed, multicast, file-download application
+## Author : Jimmy Zhang (Jimmyjz1127)
 ## Date : November 22, 2024
 
 ## Instructions 
